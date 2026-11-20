@@ -11,6 +11,7 @@ export interface Theme {
   mono: string;      // kort mærke i cirklen (egne cirkler – ingen LEGO-billeder)
   color: string;
   set?: string;      // sættet temaet åbner (indtil der er flere sæt i temaet)
+  photo?: string;    // foto i cirklen (ellers farve + mærke)
 }
 
 export const themes: Theme[] = [
@@ -18,7 +19,7 @@ export const themes: Theme[] = [
   { slug: 'pirates', name: { en: 'Pirates', de: 'Pirates' }, mono: 'PI', color: 'var(--blue)' },
   { slug: 'space', name: { en: 'Space', de: 'Space' }, mono: 'SP', color: 'var(--navy)' },
   { slug: 'town', name: { en: 'Town', de: 'Town' }, mono: 'TO', color: 'var(--mustard)' },
-  { slug: 'star-wars', name: { en: 'Star Wars™', de: 'Star Wars™' }, mono: 'SW', color: '#111', set: '75135' },
+  { slug: 'star-wars', name: { en: 'Star Wars™', de: 'Star Wars™' }, mono: 'SW', color: '#111', set: '75135', photo: 'img/lego/75135/t-02.jpg' },
   { slug: 'harry-potter', name: { en: 'Harry Potter™', de: 'Harry Potter™' }, mono: 'HP', color: 'var(--orange)' },
   { slug: 'western', name: { en: 'Western', de: 'Western' }, mono: 'WE', color: '#8a5a32' },
   { slug: 'ninja', name: { en: 'Ninja', de: 'Ninja' }, mono: 'NI', color: 'var(--red)' },
@@ -37,7 +38,8 @@ export interface LegoSet {
   pieces: number;
   minifigs: string[];
   condition: number; // 1–10
-  priceEur?: number; // fra cts-app → Indkøb
+  priceEur?: number;
+  photos?: { file: string; thumb: string; w: number; h: number; alt: T }[];
   intro: T;
   text: T;
   included: Record<Lang, string[]>;
@@ -54,7 +56,12 @@ export const sets: LegoSet[] = [
     pieces: 215,
     minifigs: ['Obi-Wan Kenobi', 'R4‑P17'],
     condition: 9,
-    priceEur: 45, // cts-app → Indkøb: 'BL or eBay Average (€)' (feltet 'Sættes til salg for' var tomt)
+    priceEur: 60, // sat af Thomas 20-11-2026
+    photos: [
+      { file: 'img/lego/75135/01.jpg', thumb: 'img/lego/75135/t-01.jpg', w: 1600, h: 1381, alt: { en: 'Building instructions, minifigures and the sorted bags', de: 'Bauanleitung, Minifiguren und die sortierten Beutel' } },
+      { file: 'img/lego/75135/02.jpg', thumb: 'img/lego/75135/t-02.jpg', w: 1600, h: 1081, alt: { en: 'The building instructions', de: 'Die Bauanleitung' } },
+      { file: 'img/lego/75135/03.jpg', thumb: 'img/lego/75135/t-03.jpg', w: 1284, h: 1600, alt: { en: 'All parts sorted into bags, with Obi-Wan Kenobi and R4‑P17', de: 'Alle Teile in Beuteln sortiert, mit Obi-Wan Kenobi und R4‑P17' } },
+    ],
     intro: {
       en: 'Obi-Wan Kenobi’s red and grey Jedi Interceptor – complete, checked piece by piece and with the original box.',
       de: 'Obi-Wan Kenobis rot-grauer Jedi Interceptor – vollständig, Teil für Teil geprüft und mit Originalkarton.',

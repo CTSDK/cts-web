@@ -1,7 +1,7 @@
 ---
 // Salgsside for ét LEGO-sæt – opbygget som en produktside på LEGO.com, i CTS-stil.
 import Base from '../../layouts/Base.astro';
-import { t, href, type Lang } from '../../i18n/ui';
+import { t, href, asset, type Lang } from '../../i18n/ui';
 import { getSet, themeOf, formatPrice } from '../../data/lego';
 interface Props { lang: Lang; no: string; }
 const { lang, no } = Astro.props;
@@ -20,13 +20,25 @@ const paragraphs = s.text[lang].split('\n\n');
     </nav>
 
     <div class="top">
-      <!-- Billedfelt: rigtige fotos kommer senere -->
-      <div class="media" aria-hidden="true">
-        <div class="bars"><span></span><span></span><span></span><span></span></div>
-        <span class="media-no">{s.no}</span>
-        <span class="media-name">{s.name}</span>
-        <span class="media-soon">{t(lang, 'set.photo.soon')}</span>
-      </div>
+      {s.photos && s.photos.length ? (
+        <div class="gallery">
+          <img id="main-photo" class="main" src={asset(s.photos[0].file)} alt={s.photos[0].alt[lang]} width={s.photos[0].w} height={s.photos[0].h} />
+          <div class="thumbs">
+            {s.photos.map((ph, i) => (
+              <button type="button" class:list={['thumb', { active: i === 0 }]} data-src={asset(ph.file)} data-alt={ph.alt[lang]} aria-label={ph.alt[lang]}>
+                <img src={asset(ph.thumb)} alt="" width="120" height="100" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div class="media" aria-hidden="true">
+          <div class="bars"><span></span><span></span><span></span><span></span></div>
+          <span class="media-no">{s.no}</span>
+          <span class="media-name">{s.name}</span>
+          <span class="media-soon">{t(lang, 'set.photo.soon')}</span>
+        </div>
+      )}
 
       <div class="buy">
         <p class="kicker">{th.name[lang]} · {s.subtheme[lang]}</p>
@@ -77,6 +89,19 @@ const paragraphs = s.text[lang].split('\n\n');
   </section>
 </Base>
 
+<script>
+  // Skift hovedbilledet, når man klikker på et lille billede
+  const main = document.getElementById('main-photo') as HTMLImageElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.thumb').forEach((b) => {
+    b.addEventListener('click', () => {
+      if (!main) return;
+      main.src = b.dataset.src!; main.alt = b.dataset.alt!;
+      document.querySelectorAll('.thumb').forEach((x) => x.classList.remove('active'));
+      b.classList.add('active');
+    });
+  });
+</script>
+
 <style>
   .page { padding-top: 1.4rem; }
   .crumbs { display: flex; gap: 10px; flex-wrap: wrap; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.85rem; color: var(--ink-soft); border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem; }
@@ -98,6 +123,14 @@ const paragraphs = s.text[lang].split('\n\n');
   .media-no { font-family: var(--font-display); font-size: clamp(4rem, 11vw, 8rem); line-height: 1; margin-right: 14%; }
   .media-name { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; margin: 0.4rem 14% 0 0; }
   .media-soon { position: absolute; left: 20px; bottom: 18px; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; opacity: 0.75; }
+
+  /* Fotogalleri */
+  .gallery { display: flex; flex-direction: column; gap: 12px; }
+  .main { width: 100%; aspect-ratio: 1; object-fit: contain; background: #f1eee7; border-radius: 12px; }
+  .thumbs { display: flex; gap: 10px; }
+  .thumb { padding: 0; border: 2px solid transparent; border-radius: 8px; background: #f1eee7; cursor: pointer; width: 92px; height: 76px; overflow: hidden; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb.active, .thumb:hover { border-color: var(--ink); }
 
   /* Købsboks */
   .kicker { margin: 0; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.95rem; color: var(--orange); }

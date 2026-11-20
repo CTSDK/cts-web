@@ -2,7 +2,7 @@
 // LEGO-afdelingen: temaer som runde ikoner (opbygning som på LEGO.com), i CTS-stil.
 // Et tema med et sæt kan klikkes; de andre er nedtonede, til der kommer sæt i dem.
 import Base from '../../layouts/Base.astro';
-import { t, href, type Lang } from '../../i18n/ui';
+import { t, href, asset, type Lang } from '../../i18n/ui';
 import { themes } from '../../data/lego';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
@@ -23,7 +23,7 @@ const { lang } = Astro.props;
         {themes.map((th) => th.set ? (
           <li>
             <a class="theme on" href={href(lang, `lego/${th.set}`)} style={`--c: ${th.color}`}>
-              <span class="circle"><span class="mono">{th.mono}</span><span class="tag">{t(lang, 'lego.new')}</span></span>
+              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="240" height="162" /> : <span class="mono">{th.mono}</span>}<span class="tag">{t(lang, 'lego.new')}</span></span>
               <span class="name">{th.name[lang]}</span>
             </a>
           </li>
@@ -63,6 +63,7 @@ const { lang } = Astro.props;
     box-shadow: 0 0 0 4px #f1eee7, 0 0 0 5px var(--ink);
     transition: transform 0.15s ease;
   }
+  .ph { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
   .mono { font-family: var(--font-display); font-size: 2rem; color: #fff; letter-spacing: 0.04em; }
   .tag {
     position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap;
