@@ -58,9 +58,15 @@ export const sets: LegoSet[] = [
     condition: 9,
     priceEur: 60, // sat af Thomas 20-11-2026
     photos: [
-      { file: 'img/lego/75135/01.jpg', thumb: 'img/lego/75135/t-01.jpg', w: 1600, h: 1381, alt: { en: 'Building instructions, minifigures and the sorted bags', de: 'Bauanleitung, Minifiguren und die sortierten Beutel' } },
-      { file: 'img/lego/75135/02.jpg', thumb: 'img/lego/75135/t-02.jpg', w: 1600, h: 1081, alt: { en: 'The building instructions', de: 'Die Bauanleitung' } },
-      { file: 'img/lego/75135/03.jpg', thumb: 'img/lego/75135/t-03.jpg', w: 1284, h: 1600, alt: { en: 'All parts sorted into bags, with Obi-Wan Kenobi and R4‑P17', de: 'Alle Teile in Beuteln sortiert, mit Obi-Wan Kenobi und R4‑P17' } },
+      { file: 'img/lego/75135/02.jpg', thumb: 'img/lego/75135/t-02.jpg', w: 1600, h: 1109, alt: { en: 'The box, front', de: 'Der Karton, Vorderseite' } },
+      { file: 'img/lego/75135/01.jpg', thumb: 'img/lego/75135/t-01.jpg', w: 1488, h: 1600, alt: { en: 'Everything included: box, building instructions, minifigures and the sorted bags', de: 'Alles dabei: Karton, Bauanleitung, Minifiguren und die sortierten Beutel' } },
+      { file: 'img/lego/75135/03.jpg', thumb: 'img/lego/75135/t-03.jpg', w: 1600, h: 1197, alt: { en: 'The box, back – with the repaired cracks', de: 'Der Karton, Rückseite – mit den reparierten Rissen' } },
+      { file: 'img/lego/75135/04.jpg', thumb: 'img/lego/75135/t-04.jpg', w: 1530, h: 1600, alt: { en: 'The box with side', de: 'Der Karton mit Seitenansicht' } },
+      { file: 'img/lego/75135/05.jpg', thumb: 'img/lego/75135/t-05.jpg', w: 1595, h: 1600, alt: { en: 'The box with side', de: 'Der Karton mit Seitenansicht' } },
+      { file: 'img/lego/75135/06.jpg', thumb: 'img/lego/75135/t-06.jpg', w: 1600, h: 1063, alt: { en: 'The box with side', de: 'Der Karton mit Seitenansicht' } },
+      { file: 'img/lego/75135/07.jpg', thumb: 'img/lego/75135/t-07.jpg', w: 1600, h: 1381, alt: { en: 'Building instructions, minifigures and the sorted bags', de: 'Bauanleitung, Minifiguren und die sortierten Beutel' } },
+      { file: 'img/lego/75135/08.jpg', thumb: 'img/lego/75135/t-08.jpg', w: 1600, h: 1081, alt: { en: 'The building instructions', de: 'Die Bauanleitung' } },
+      { file: 'img/lego/75135/09.jpg', thumb: 'img/lego/75135/t-09.jpg', w: 1284, h: 1600, alt: { en: 'All parts sorted into bags, with Obi-Wan Kenobi and R4‑P17', de: 'Alle Teile in Beuteln sortiert, mit Obi-Wan Kenobi und R4‑P17' } },
     ],
     intro: {
       en: 'Obi-Wan Kenobi’s red and grey Jedi Interceptor – complete, checked piece by piece and with the original box.',
