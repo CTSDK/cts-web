@@ -37,14 +37,15 @@ const doors = [
      Afstandene måles, så de er ens hele vejen rundt. */
   .doors {
     list-style: none; padding: 0; margin: var(--doors-top, 0) auto 0; max-width: 1060px;
-    display: grid; grid-template-columns: 320px 1fr 320px; row-gap: 0;
+    display: grid; grid-template-columns: 320px 1fr 320px; grid-template-rows: 260px auto; row-gap: 0;
+    /* Række 1 er låst til cirklernes højde, så tekstlængden ikke flytter Services */
   }
   .d-lego { grid-column: 1; grid-row: 1; }
   .d-center { grid-column: 2; grid-row: 1; height: 260px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
   .d-retro { grid-column: 3; grid-row: 1; }
-  .d-services { grid-column: 1 / -1; grid-row: 2; justify-self: center; width: 460px; margin-top: var(--diamond-pull, -150px); }
+  .d-services { grid-column: 1 / -1; grid-row: 2; justify-self: center; width: 460px; margin-top: var(--diamond-pull, 110px); }
   @media (max-width: 1100px) {
-    .doors { max-width: 820px; grid-template-columns: 1fr 1fr; gap: 48px 40px; }
+    .doors { max-width: 820px; grid-template-columns: 1fr 1fr; grid-template-rows: none; gap: 48px 40px; }
     .d-center { grid-column: 1 / -1; grid-row: 1; height: auto; }
     .d-lego { grid-column: 1; grid-row: 2; }
     .d-retro { grid-column: 2; grid-row: 2; }
@@ -76,7 +77,7 @@ const doors = [
   .body { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; padding: 24px 10px 0; }
   .no { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.9rem; color: var(--orange); }
   h3 { margin: 0.4rem 0 0.6rem; font-size: 2.6rem; }
-  p { margin: 0 0 1.4rem; color: var(--ink-soft); font-size: 1.12rem; line-height: 1.6; max-width: 24rem; }
+  p { margin: 0 0 1.4rem; color: var(--ink); font-size: 1.68rem; line-height: 1.4; max-width: 26rem; }
   .btn { margin-top: auto; font-size: 1.05rem; }
   .door:hover .btn { background: var(--ink); color: var(--paper); }
 </style>
