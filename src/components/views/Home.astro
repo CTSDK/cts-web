@@ -51,7 +51,7 @@ const year = new Date().getFullYear();
     border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem;
   }
 
-  .seal { width: 320px; height: 320px; mix-blend-mode: multiply; }
+  .seal { width: 400px; height: 400px; mix-blend-mode: multiply; }
 
   /* Overskrift som på magasin-coveret: lille kursiv + stor serif med punktum */
   h1 { text-transform: none; line-height: 1; margin: 0; }
@@ -61,12 +61,13 @@ const year = new Date().getFullYear();
   .dot { color: var(--orange); margin-left: -0.2em; }
 
   /* Toppen: tekst | segl | tekst, i samme spalter som LEGO og Retro */
-  .top { display: grid; grid-template-columns: 380px 1fr 380px; align-items: center; max-width: 1120px; margin: 5rem auto var(--seal-gap, 2.5rem); }
+  .top { display: grid; grid-template-columns: 340px 1fr 340px; align-items: center; max-width: 1080px; margin: 5rem auto var(--seal-gap, 2.5rem); }
   .top .seal { grid-column: 2; margin: 0 auto; }
   .side { padding: 18px 4px; min-height: 300px; display: flex; flex-direction: column; justify-content: center; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); }
   .left { grid-column: 1; grid-row: 1; }
   .right { grid-column: 3; grid-row: 1; }
-  .side-label { margin: 0 0 8px; font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; font-size: 1.4rem; color: var(--orange); }
+  .side-label { margin: 0 0 8px; font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; font-size: 1.25rem; white-space: nowrap; color: var(--orange); }
+  :global(html[lang='de']) .side-label { white-space: normal; }
   .side-text { margin: 0; font-size: 1.95rem; line-height: 1.35; font-weight: 700; color: var(--ink); }
   @media (max-width: 1100px) {
     .top { grid-template-columns: 1fr 1fr; gap: 28px 40px; max-width: 820px; margin-top: 3rem; }
@@ -79,7 +80,7 @@ const year = new Date().getFullYear();
     .left, .right { grid-column: 1; grid-row: auto; }
     .side { min-height: 0; }
     .side-text { font-size: 1.5rem; }
-    .side-label { font-size: 1.1rem; }
+    .side-label { font-size: 1.1rem; white-space: normal; }
   }
 
   /* Strap mellem to streger med skråstreg (magasin) */
@@ -105,7 +106,7 @@ const year = new Date().getFullYear();
 
   @media (max-width: 560px) {
     .issue { font-size: 0.66rem; letter-spacing: 0.16em; }
-    .seal { width: 240px; height: 240px; margin-top: 1.8rem; }
+    .seal { width: 300px; height: 300px; margin-top: 1.8rem; }
     .strap { font-size: 0.72rem; letter-spacing: 0.1em; }
     .strap span { padding: 0.55rem 0.7rem; }
   }
