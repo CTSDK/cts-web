@@ -26,8 +26,6 @@ const year = new Date().getFullYear();
 
     <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
-    <p class="label kicker">01 – 03</p>
-    <h2>{t(lang, 'home.choose')}</h2>
     <Doors lang={lang} />
 
     <div class="about">
@@ -73,16 +71,13 @@ const year = new Date().getFullYear();
   .about { margin-top: 4rem; }
   .lead { font-size: 1.05rem; line-height: 1.8; max-width: 36rem; }
 
-  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.2rem 0 2.2rem; }
+  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.2rem 0 1.4rem; }
   .bars span { width: 34px; height: 6px; }
   .bars span:nth-child(1) { background: var(--blue); }
   .bars span:nth-child(2) { background: var(--mustard); }
   .bars span:nth-child(3) { background: var(--red); }
   .bars span:nth-child(4) { background: var(--orange); }
 
-  .kicker { justify-content: center; color: var(--orange); font-size: 0.8rem; margin: 0 0 0.4rem; }
-  .kicker::after { display: none; }
-  h2 { margin-bottom: 0.2rem; }
 
   @media (max-width: 560px) {
     .issue { font-size: 0.66rem; letter-spacing: 0.16em; }
