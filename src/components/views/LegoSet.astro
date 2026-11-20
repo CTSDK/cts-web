@@ -41,7 +41,7 @@ const paragraphs = s.text[lang].split('\n\n');
       )}
 
       <div class="buy">
-        <p class="kicker">{th.name[lang]} · {s.subtheme[lang]}</p>
+        <p class="kicker">{th.name[lang]}{s.subtheme && ` · ${s.subtheme[lang]}`}</p>
         <h1>{s.name}</h1>
         <p class="setno">{t(lang, 'set.number')} {s.no}</p>
 
@@ -78,7 +78,7 @@ const paragraphs = s.text[lang].split('\n\n');
           <dt>{t(lang, 'set.number')}</dt><dd>{s.no}</dd>
           <dt>{t(lang, 'set.pieces')}</dt><dd>{s.pieces}</dd>
           <dt>{t(lang, 'set.year')}</dt><dd>{s.year}</dd>
-          <dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.join(', ')}</dd>
+          <dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.length ? s.minifigs.join(', ') : '–'}</dd>
           <dt>{t(lang, 'set.condition')}</dt><dd>{s.condition}/10</dd>
           <dt>SKU</dt><dd>{s.sku}</dd>
         </dl>

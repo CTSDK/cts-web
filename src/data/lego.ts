@@ -1,5 +1,7 @@
 // LEGO-afdelingen: temaer og sæt til salg.
 // Nyt sæt: tilføj et objekt i `sets` og sæt dets tema til `active: true` i `themes`.
+// Kilde for 3845: cts-app → Indkøb (stand 9, æske, vejledning, komplet, "Alt er fint"), DB (Games, 2010),
+// ren sorteringsliste (118 dele, ingen minifigurer), æskens fotos (2–4 spillere, 5+, 10–15 min.). Pris €15 sat af Thomas 20-11-2026.
 // Kilde for 75135: cts-app → Lager (stand 9, æske) og "261118 Sortering" (alle dele fundet).
 import type { Lang } from '../i18n/ui';
 
@@ -26,6 +28,7 @@ export const themes: Theme[] = [
   { slug: 'boats', name: { en: 'Boats', de: 'Boote' }, mono: 'BO', color: 'var(--blue)' },
   { slug: 'train', name: { en: 'Train', de: 'Eisenbahn' }, mono: 'TR', color: 'var(--navy)' },
   { slug: 'aquazone', name: { en: 'Aquazone', de: 'Aquazone' }, mono: 'AQ', color: '#2f7f86' },
+  { slug: 'games', name: { en: 'Games', de: 'Spiele' }, mono: 'GA', color: 'var(--mustard)', set: '3845', photo: 'img/lego/themes/games.jpg' },
 ];
 
 export interface LegoSet {
@@ -33,7 +36,7 @@ export interface LegoSet {
   sku: string;
   name: string;
   theme: string;
-  subtheme: T;
+  subtheme?: T;
   year: number;
   pieces: number;
   minifigs: string[];
@@ -79,6 +82,35 @@ export const sets: LegoSet[] = [
     included: {
       en: ['All parts – checked against the parts list', 'Minifigures: Obi-Wan Kenobi and R4‑P17', 'Building instructions', 'Sticker sheet', 'Original box (repaired cracks on the back)'],
       de: ['Alle Teile – anhand der Teileliste geprüft', 'Minifiguren: Obi-Wan Kenobi und R4‑P17', 'Bauanleitung', 'Stickerbogen', 'Originalkarton (reparierte Risse auf der Rückseite)'],
+    },
+  },
+  {
+    no: '3845',
+    sku: '261118-3845',
+    name: 'Wild Wool / Shave a Sheep',
+    theme: 'games',
+    year: 2010,
+    pieces: 118,
+    minifigs: [],
+    condition: 9,
+    priceEur: 15, // sat af Thomas 20-11-2026
+    photos: [
+      { file: 'img/lego/3845/01.jpg', thumb: 'img/lego/3845/t-01.jpg', w: 1200, h: 1600, alt: { en: 'The box, front', de: 'Der Karton, Vorderseite' } },
+      { file: 'img/lego/3845/02.jpg', thumb: 'img/lego/3845/t-02.jpg', w: 1201, h: 1600, alt: { en: 'The box, front', de: 'Der Karton, Vorderseite' } },
+      { file: 'img/lego/3845/03.jpg', thumb: 'img/lego/3845/t-03.jpg', w: 1382, h: 1600, alt: { en: 'The box with side', de: 'Der Karton mit Seitenansicht' } },
+      { file: 'img/lego/3845/04.jpg', thumb: 'img/lego/3845/t-04.jpg', w: 1600, h: 1072, alt: { en: 'Game rules, building instructions and the sorted bags', de: 'Spielregeln, Bauanleitung und die sortierten Beutel' } },
+    ],
+    intro: {
+      en: 'A LEGO board game from 2010 – complete, checked piece by piece and with the original box.',
+      de: 'Ein LEGO Brettspiel von 2010 – vollständig, Teil für Teil geprüft und mit Originalkarton.',
+    },
+    text: {
+      en: 'Shave a Sheep is a LEGO board game from 2010 for 2–4 players aged 5 and up; a game takes 10–15 minutes (as stated on the box). You build the game yourself – the sheep, the wolf and the LEGO die – and then play.\n\nWe have checked this copy piece by piece against the official parts list – all 118 parts are there. The building instructions, the game rules and the original box are included. The set is in very good condition.',
+      de: 'Shave a Sheep ist ein LEGO Brettspiel von 2010 für 2–4 Spieler ab 5 Jahren; eine Partie dauert 10–15 Minuten (laut Karton). Das Spiel wird selbst gebaut – die Schafe, der Wolf und der LEGO Würfel – und dann wird gespielt.\n\nWir haben dieses Exemplar Teil für Teil anhand der offiziellen Teileliste geprüft – alle 118 Teile sind vorhanden. Bauanleitung, Spielregeln und Originalkarton sind dabei. Das Set ist in sehr gutem Zustand.',
+    },
+    included: {
+      en: ['All 118 parts – checked against the parts list', 'LEGO die', 'Building instructions', 'Game rules', 'Original box'],
+      de: ['Alle 118 Teile – anhand der Teileliste geprüft', 'LEGO Würfel', 'Bauanleitung', 'Spielregeln', 'Originalkarton'],
     },
   },
 ];
