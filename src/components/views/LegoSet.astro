@@ -1,0 +1,146 @@
+---
+// Salgsside for ét LEGO-sæt – opbygget som en produktside på LEGO.com, i CTS-stil.
+import Base from '../../layouts/Base.astro';
+import { t, href, type Lang } from '../../i18n/ui';
+import { getSet, themeOf } from '../../data/lego';
+interface Props { lang: Lang; no: string; }
+const { lang, no } = Astro.props;
+const s = getSet(no);
+const th = themeOf(s.theme);
+const paragraphs = s.text[lang].split('\n\n');
+---
+<Base lang={lang} slug="lego" title={`${s.no} ${s.name}`} description={s.intro[lang]}>
+  <section class="wrap page">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={href(lang, 'lego')}>LEGO®</a>
+      <span aria-hidden="true">›</span>
+      <a href={href(lang, 'lego')}>{th.name[lang]}</a>
+      <span aria-hidden="true">›</span>
+      <span>{s.no}</span>
+    </nav>
+
+    <div class="top">
+      <!-- Billedfelt: rigtige fotos kommer senere -->
+      <div class="media" aria-hidden="true">
+        <div class="bars"><span></span><span></span><span></span><span></span></div>
+        <span class="media-no">{s.no}</span>
+        <span class="media-name">{s.name}</span>
+        <span class="media-soon">{t(lang, 'set.photo.soon')}</span>
+      </div>
+
+      <div class="buy">
+        <p class="kicker">{th.name[lang]} · {s.subtheme[lang]}</p>
+        <h1>{s.name}</h1>
+        <p class="setno">{t(lang, 'set.number')} {s.no}</p>
+
+        <ul class="facts">
+          <li><b>{s.pieces}</b><span>{t(lang, 'set.pieces')}</span></li>
+          <li><b>{s.year}</b><span>{t(lang, 'set.year')}</span></li>
+          <li><b>{s.minifigs.length}</b><span>{t(lang, 'set.minifigs')}</span></li>
+          <li><b>{s.condition}/10</b><span>{t(lang, 'set.condition')}</span></li>
+        </ul>
+
+        <p class="intro">{s.intro[lang]}</p>
+
+        <div class="pricebox">
+          <p class="stock"><span class="dot" aria-hidden="true"></span>{t(lang, 'set.instock')}</p>
+          <p class="price"><span>{t(lang, 'set.price')}</span> <b>{t(lang, 'set.price.soon')}</b></p>
+          <span class="buybtn" aria-disabled="true">{t(lang, 'set.buy.soon')}</span>
+          <p class="checked">✓ {t(lang, 'set.checked')}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="more">
+      <div class="about">
+        <h2>{t(lang, 'set.details')}</h2>
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="side">
+        <h2>{t(lang, 'set.included')}</h2>
+        <ul class="incl">
+          {s.included[lang].map((i) => <li>{i}</li>)}
+        </ul>
+        <h2>{t(lang, 'set.specs')}</h2>
+        <dl class="specs">
+          <dt>{t(lang, 'set.number')}</dt><dd>{s.no}</dd>
+          <dt>{t(lang, 'set.pieces')}</dt><dd>{s.pieces}</dd>
+          <dt>{t(lang, 'set.year')}</dt><dd>{s.year}</dd>
+          <dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.join(', ')}</dd>
+          <dt>{t(lang, 'set.condition')}</dt><dd>{s.condition}/10</dd>
+          <dt>SKU</dt><dd>{s.sku}</dd>
+        </dl>
+      </div>
+    </div>
+
+    <p class="back"><a href={href(lang, 'lego')}>← {t(lang, 'set.back')}</a></p>
+  </section>
+</Base>
+
+<style>
+  .page { padding-top: 1.4rem; }
+  .crumbs { display: flex; gap: 10px; flex-wrap: wrap; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.85rem; color: var(--ink-soft); border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem; }
+  .crumbs a { color: var(--ink); text-decoration: none; }
+  .crumbs a:hover { color: var(--orange); }
+
+  .top { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; margin-top: 2.2rem; align-items: start; }
+
+  /* Billedfelt */
+  .media {
+    position: relative; aspect-ratio: 1; background: var(--navy); border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--paper); text-align: center; padding: 24px;
+  }
+  .bars { position: absolute; top: 0; bottom: 0; right: 0; width: 14%; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .bars span:nth-child(1) { background: var(--blue); }
+  .bars span:nth-child(2) { background: var(--mustard); }
+  .bars span:nth-child(3) { background: var(--red); }
+  .bars span:nth-child(4) { background: var(--orange); }
+  .media-no { font-family: var(--font-display); font-size: clamp(4rem, 11vw, 8rem); line-height: 1; margin-right: 14%; }
+  .media-name { font-family: var(--font-serif); font-style: italic; font-size: 1.6rem; margin: 0.4rem 14% 0 0; }
+  .media-soon { position: absolute; left: 20px; bottom: 18px; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; opacity: 0.75; }
+
+  /* Købsboks */
+  .kicker { margin: 0; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.95rem; color: var(--orange); }
+  h1 { font-size: clamp(2.4rem, 4.6vw, 3.8rem); margin: 0.4rem 0 0.3rem; }
+  .setno { margin: 0 0 1.2rem; font-size: 1.1rem; color: var(--ink-soft); }
+  .facts { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .facts li { display: flex; flex-direction: column; align-items: center; padding: 12px 4px; }
+  .facts li + li { border-left: 1px solid rgba(23, 20, 15, 0.25); }
+  .facts b { font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; line-height: 1; }
+  .facts span { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem; margin-top: 6px; color: var(--ink-soft); }
+  .intro { font-size: 1.2rem; line-height: 1.6; margin: 0 0 1.4rem; }
+
+  .pricebox { background: #f1eee7; border-radius: 12px; padding: 20px 22px; }
+  .pricebox p { margin: 0; }
+  .stock { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2e6b3a; }
+  .stock .dot { width: 10px; height: 10px; border-radius: 50%; background: #2e9a4a; }
+  .price { margin: 0.8rem 0 1rem !important; font-size: 1.1rem; }
+  .price span { color: var(--ink-soft); }
+  .price b { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+  .buybtn {
+    display: block; text-align: center; padding: 14px; border-radius: 999px; background: #c9c3b6; color: #fff;
+    font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; cursor: not-allowed;
+  }
+  .checked { margin-top: 0.9rem !important; font-size: 0.95rem; color: var(--ink-soft); }
+
+  /* Mere info */
+  .more { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 56px; margin-top: 3.4rem; border-top: 3px double var(--ink); padding-top: 2rem; }
+  .more h2 { font-size: 1.9rem; margin: 0 0 0.8rem; }
+  .about p { font-size: 1.15rem; line-height: 1.75; margin: 0 0 1rem; }
+  .incl { list-style: none; padding: 0; margin: 0 0 2rem; }
+  .incl li { position: relative; padding: 8px 0 8px 30px; border-bottom: 1px solid rgba(23, 20, 15, 0.15); }
+  .incl li::before { content: '✓'; position: absolute; left: 4px; color: var(--orange); font-weight: 700; }
+  .specs { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 0; }
+  .specs dt { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; color: var(--ink-soft); padding-top: 3px; }
+  .specs dd { margin: 0; }
+  .back { margin-top: 2.6rem; }
+  .back a { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
+
+  @media (max-width: 860px) {
+    .top, .more { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 480px) {
+    .facts b { font-size: 1.5rem; }
+    .facts span { font-size: 0.65rem; letter-spacing: 0.04em; }
+  }
+</style>
