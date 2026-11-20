@@ -30,7 +30,7 @@ const { lang } = Astro.props;
         ) : (
           <li>
             <span class="theme off" style={`--c: ${th.color}`}>
-              <span class="circle"><span class="mono">{th.mono}</span><span class="tag soon">{t(lang, 'soon')}</span></span>
+              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="480" height="480" /> : <span class="mono">{th.mono}</span>}<span class="tag soon">{t(lang, 'soon')}</span></span>
               <span class="name">{th.name[lang]}</span>
             </span>
           </li>
@@ -75,6 +75,7 @@ const { lang } = Astro.props;
   .on:hover .circle { transform: translateY(-3px); }
   .on:hover .name { color: var(--orange); }
   .off { opacity: 0.45; cursor: default; }
+  .off:has(.ph) { opacity: 0.85; }
 
   @media (max-width: 820px) { .themes { grid-template-columns: repeat(4, 1fr); } }
   @media (max-width: 520px) {

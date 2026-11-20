@@ -15,7 +15,7 @@ export interface Theme {
 }
 
 export const themes: Theme[] = [
-  { slug: 'castle', name: { en: 'Castle', de: 'Castle' }, mono: 'CA', color: 'var(--red)' },
+  { slug: 'castle', name: { en: 'Castle', de: 'Castle' }, mono: 'CA', color: 'var(--red)', photo: 'img/lego/themes/castle.jpg' },
   { slug: 'pirates', name: { en: 'Pirates', de: 'Pirates' }, mono: 'PI', color: 'var(--blue)' },
   { slug: 'space', name: { en: 'Space', de: 'Space' }, mono: 'SP', color: 'var(--navy)' },
   { slug: 'town', name: { en: 'Town', de: 'Town' }, mono: 'TO', color: 'var(--mustard)' },
