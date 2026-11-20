@@ -1,0 +1,23 @@
+---
+// Fælles side til LEGO, Retro Design og Copenhagen Services ("coming soon").
+import Base from '../../layouts/Base.astro';
+import Icon from '../Icon.astro';
+import { t, href, type Lang, type Key } from '../../i18n/ui';
+interface Props { lang: Lang; slug: string; icon: 'brick' | 'lamp' | 'city'; title: Key; text: Key; }
+const { lang, slug, icon, title, text } = Astro.props;
+---
+<Base lang={lang} slug={slug} title={t(lang, title)} description={t(lang, text)}>
+  <section class="wrap page">
+    <Icon name={icon} />
+    <h1>{t(lang, title)}</h1>
+    <p class="lead">{t(lang, text)}</p>
+    <p><span class="stamp">{t(lang, 'soon')}</span></p>
+    <div class="ornament" aria-hidden="true"></div>
+    <p><a href={href(lang)}>← {t(lang, 'back')}</a></p>
+  </section>
+</Base>
+<style>
+  .page { text-align: center; padding-top: 3rem; }
+  .page :global(.icon) { margin: 0 auto 1rem; }
+  .stamp { margin-top: 1.5rem; }
+</style>

@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import { t, href, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const doors = [
+  { slug: 'lego', icon: 'brick', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { slug: 'retro', icon: 'lamp', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { slug: 'services', icon: 'city', title: 'door.services.title', text: 'door.services.text', soon: true },
+] as const;
+---
+<ul class="doors">
+  {doors.map((d) => (
+    <li>
+      <a class="door" href={href(lang, d.slug)}>
+        <Icon name={d.icon} />
+        <h3>{t(lang, d.title)}</h3>
+        <p>{t(lang, d.text)}</p>
+        <span class="enter">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .doors { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  /* "Dør" med buet top og dobbelt ramme – som en gammel butiksdør */
+  .door {
+    display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%;
+    padding: 56px 22px 26px; text-decoration: none; color: var(--ink);
+    background: var(--paper-deep);
+    border: 3px double var(--ink);
+    border-radius: 140px 140px 4px 4px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .door:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--ink); color: var(--ink); }
+  .door p { margin: 0 0 1.2rem; color: var(--ink-soft); }
+  .door h3 { margin-top: 0.6rem; }
+  .enter { margin-top: auto; font-family: var(--font-display); color: var(--accent); letter-spacing: 0.05em; }
+</style>

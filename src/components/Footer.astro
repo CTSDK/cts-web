@@ -1,0 +1,28 @@
+---
+import { t, href, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <hr class="double-rule" />
+  <div class="wrap inner">
+    <div>
+      <strong class="name">CTS · {t(lang, 'site.name')}</strong><br />
+      {t(lang, 'footer.country')} · © {year}
+    </div>
+    <div>
+      <strong>{t(lang, 'contact.title')}</strong><br />
+      <em>{t(lang, 'contact.text')}</em>
+    </div>
+    <div><a href={href(lang, 'privacy')}>{t(lang, 'privacy.link')}</a></div>
+  </div>
+  <p class="wrap legal">{t(lang, 'footer.lego')}</p>
+</footer>
+
+<style>
+  .site-footer { margin-top: 4rem; padding-bottom: 2rem; font-size: 1rem; color: var(--ink-soft); }
+  .inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; padding-top: 1.2rem; }
+  .name { font-family: var(--font-display); font-weight: 400; color: var(--ink); }
+  .legal { font-size: 0.85rem; margin-top: 1.5rem; }
+</style>

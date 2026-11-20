@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Doors from '../Doors.astro';
+import { t, type Lang, asset } from '../../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+---
+<Base lang={lang}>
+  <section class="wrap hero">
+    <img class="seal" src={asset('logo-segl.png')} alt="" width="220" height="220" />
+    <h1>{t(lang, 'home.title')}</h1>
+    <p class="lead">{t(lang, 'home.intro')}</p>
+    <div class="ornament" aria-hidden="true"></div>
+    <h2 class="center">{t(lang, 'home.choose')}</h2>
+    <Doors lang={lang} />
+  </section>
+</Base>
+<style>
+  .hero { text-align: center; padding-top: 2.5rem; }
+  .seal { width: 220px; height: 220px; margin: 0 auto 1.5rem; mix-blend-mode: multiply; }
+  @media (max-width: 560px) { .seal { width: 160px; height: 160px; } }
+</style>
