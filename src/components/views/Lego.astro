@@ -23,7 +23,7 @@ const { lang } = Astro.props;
         {themes.map((th) => th.set ? (
           <li>
             <a class="theme on" href={href(lang, `lego/${th.set}`)} style={`--c: ${th.color}`}>
-              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="240" height="162" /> : <span class="mono">{th.mono}</span>}<span class="tag">{t(lang, 'lego.new')}</span></span>
+              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="480" height="480" /> : <span class="mono">{th.mono}</span>}<span class="tag">{t(lang, 'lego.new')}</span></span>
               <span class="name">{th.name[lang]}</span>
             </a>
           </li>

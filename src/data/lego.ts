@@ -19,7 +19,7 @@ export const themes: Theme[] = [
   { slug: 'pirates', name: { en: 'Pirates', de: 'Pirates' }, mono: 'PI', color: 'var(--blue)' },
   { slug: 'space', name: { en: 'Space', de: 'Space' }, mono: 'SP', color: 'var(--navy)' },
   { slug: 'town', name: { en: 'Town', de: 'Town' }, mono: 'TO', color: 'var(--mustard)' },
-  { slug: 'star-wars', name: { en: 'Star Wars™', de: 'Star Wars™' }, mono: 'SW', color: '#111', set: '75135', photo: 'img/lego/75135/t-02.jpg' },
+  { slug: 'star-wars', name: { en: 'Star Wars™', de: 'Star Wars™' }, mono: 'SW', color: '#111', set: '75135', photo: 'img/lego/themes/star-wars.jpg' },
   { slug: 'harry-potter', name: { en: 'Harry Potter™', de: 'Harry Potter™' }, mono: 'HP', color: 'var(--orange)' },
   { slug: 'western', name: { en: 'Western', de: 'Western' }, mono: 'WE', color: '#8a5a32' },
   { slug: 'ninja', name: { en: 'Ninja', de: 'Ninja' }, mono: 'NI', color: 'var(--red)' },
