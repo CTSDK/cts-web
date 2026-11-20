@@ -5,24 +5,33 @@ const { lang } = Astro.props;
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer">
-  <hr class="double-rule" />
+  <div class="stripes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <div class="wrap inner">
     <div>
-      <strong class="name">CTS · {t(lang, 'site.name')}</strong><br />
-      {t(lang, 'footer.country')} · © {year}
+      <strong class="name">CTS</strong>
+      <span class="small">{t(lang, 'site.name')}<br />{t(lang, 'footer.country')} · © {year}</span>
     </div>
     <div>
-      <strong>{t(lang, 'contact.title')}</strong><br />
-      <em>{t(lang, 'contact.text')}</em>
+      <strong class="h">{t(lang, 'contact.title')}</strong>
+      <span class="small">{t(lang, 'contact.text')}</span>
     </div>
-    <div><a href={href(lang, 'privacy')}>{t(lang, 'privacy.link')}</a></div>
+    <div><a class="h" href={href(lang, 'privacy')}>{t(lang, 'privacy.link')}</a></div>
   </div>
   <p class="wrap legal">{t(lang, 'footer.lego')}</p>
 </footer>
 
 <style>
-  .site-footer { margin-top: 4rem; padding-bottom: 2rem; font-size: 1rem; color: var(--ink-soft); }
-  .inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; padding-top: 1.2rem; }
-  .name { font-family: var(--font-display); font-weight: 400; color: var(--ink); }
-  .legal { font-size: 0.85rem; margin-top: 1.5rem; }
+  .site-footer { margin-top: 5rem; background: var(--navy); color: var(--paper); font-size: 0.95rem; padding-bottom: 2rem; }
+  .stripes { display: grid; grid-template-columns: 1fr 1fr 1fr 3fr; height: 6px; }
+  .stripes span:nth-child(1) { background: var(--orange); }
+  .stripes span:nth-child(2) { background: var(--red); }
+  .stripes span:nth-child(3) { background: var(--mustard); }
+  .stripes span:nth-child(4) { background: var(--navy-deep); }
+  .inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 40px; padding-top: 2rem; }
+  .inner > div { display: flex; flex-direction: column; gap: 4px; }
+  .name { font-family: var(--font-display); font-weight: 400; font-size: 2rem; line-height: 1; color: var(--mustard); }
+  .h { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--paper); }
+  a.h:hover { color: var(--mustard); }
+  .small { opacity: 0.85; }
+  .legal { font-size: 0.8rem; opacity: 0.7; margin-top: 2rem; }
 </style>

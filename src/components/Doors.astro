@@ -1,40 +1,45 @@
 ---
+// De tre afdelinger som buede døre (første opbygning) i den nye stil.
 import Icon from './Icon.astro';
 import { t, href, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const doors = [
-  { slug: 'lego', icon: 'brick', title: 'door.lego.title', text: 'door.lego.text', soon: false },
-  { slug: 'retro', icon: 'lamp', title: 'door.retro.title', text: 'door.retro.text', soon: false },
-  { slug: 'services', icon: 'city', title: 'door.services.title', text: 'door.services.text', soon: true },
+  { no: '01', slug: 'lego', icon: 'brick', color: 'var(--mustard)', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { no: '02', slug: 'retro', icon: 'lamp', color: 'var(--orange)', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { no: '03', slug: 'services', icon: 'city', color: 'var(--blue)', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
 ---
 <ul class="doors">
   {doors.map((d) => (
     <li>
-      <a class="door" href={href(lang, d.slug)}>
+      <a class="door" href={href(lang, d.slug)} style={`--c: ${d.color}`}>
         <Icon name={d.icon} />
+        <span class="no">No. {d.no}</span>
         <h3>{t(lang, d.title)}</h3>
         <p>{t(lang, d.text)}</p>
-        <span class="enter">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
+        <span class="btn">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
       </a>
     </li>
   ))}
 </ul>
 
 <style>
-  .doors { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-  /* "Dør" med buet top og dobbelt ramme – som en gammel butiksdør */
+  .doors { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; }
+  /* Dør med buet top, farvet bund */
   .door {
     display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%;
-    padding: 56px 22px 26px; text-decoration: none; color: var(--ink);
+    padding: 56px 22px 36px; text-decoration: none; color: var(--ink);
     background: var(--paper-deep);
-    border: 3px double var(--ink);
-    border-radius: 140px 140px 4px 4px;
+    border: 1.5px solid var(--ink); box-shadow: inset 0 -8px 0 var(--c);
+    border-radius: 150px 150px 2px 2px;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .door:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--ink); color: var(--ink); }
-  .door p { margin: 0 0 1.2rem; color: var(--ink-soft); }
-  .door h3 { margin-top: 0.6rem; }
-  .enter { margin-top: auto; font-family: var(--font-display); color: var(--accent); letter-spacing: 0.05em; }
+  .door:hover { transform: translateY(-4px); box-shadow: inset 0 -8px 0 var(--c), 0 10px 24px rgba(28, 43, 61, 0.15); color: var(--ink); }
+  .door :global(.icon) { color: var(--navy); }
+  .no { margin-top: 0.8rem; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.78rem; color: var(--orange); }
+  h3 { margin: 0.4rem 0 0.5rem; font-size: 2.1rem; }
+  p { margin: 0 0 1.4rem; color: var(--ink-soft); font-size: 0.98rem; }
+  .btn { margin-top: auto; }
+  .door:hover .btn { background: var(--ink); color: var(--paper); }
 </style>

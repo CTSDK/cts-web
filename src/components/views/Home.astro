@@ -1,4 +1,5 @@
 ---
+// Forsiden: første opbygning (segl, velkomst, tre døre) i den nye stil.
 import Base from '../../layouts/Base.astro';
 import Doors from '../Doors.astro';
 import { t, type Lang, asset } from '../../i18n/ui';
@@ -8,15 +9,35 @@ const { lang } = Astro.props;
 <Base lang={lang}>
   <section class="wrap hero">
     <img class="seal" src={asset('logo-segl.png')} alt="" width="220" height="220" />
+    <p class="label center-label">{t(lang, 'site.tagline')}</p>
     <h1>{t(lang, 'home.title')}</h1>
     <p class="lead">{t(lang, 'home.intro')}</p>
-    <div class="ornament" aria-hidden="true"></div>
-    <h2 class="center">{t(lang, 'home.choose')}</h2>
+    <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <h2>{t(lang, 'home.choose')}</h2>
     <Doors lang={lang} />
   </section>
 </Base>
+
 <style>
-  .hero { text-align: center; padding-top: 2.5rem; }
-  .seal { width: 220px; height: 220px; margin: 0 auto 1.5rem; mix-blend-mode: multiply; }
-  @media (max-width: 560px) { .seal { width: 160px; height: 160px; } }
+  .hero { text-align: center; padding-top: 2.8rem; }
+  .seal { width: 200px; height: 200px; margin: 0 auto 1.4rem; mix-blend-mode: multiply; }
+  /* Etiket med streg på begge sider */
+  .center-label { justify-content: center; font-size: 0.85rem; letter-spacing: 0.25em; margin: 0 auto 1rem; max-width: 760px; }
+  .center-label::before { content: ''; flex: 1; max-width: 90px; border-top: 1.5px solid currentColor; }
+  .center-label::after { max-width: 90px; }
+  h1 { font-size: clamp(2.8rem, 7vw, 5.6rem); margin-bottom: 1.2rem; }
+  .lead { font-size: 1.08rem; line-height: 1.75; }
+  /* Fire farvestriber i stedet for ornament */
+  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.4rem 0; }
+  .bars span { width: 34px; height: 6px; }
+  .bars span:nth-child(1) { background: var(--blue); }
+  .bars span:nth-child(2) { background: var(--mustard); }
+  .bars span:nth-child(3) { background: var(--red); }
+  .bars span:nth-child(4) { background: var(--orange); }
+  h2 { margin-bottom: 0.2rem; }
+  @media (max-width: 560px) {
+    .seal { width: 150px; height: 150px; }
+    .center-label { font-size: 0.7rem; letter-spacing: 0.16em; }
+    .center-label::before, .center-label::after { max-width: 30px; }
+  }
 </style>
