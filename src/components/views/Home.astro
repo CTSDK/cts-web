@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
 
     <h1>
       <span class="pre">{t(lang, 'home.pre')}</span>
-      <span class="big">CTS<span class="dot">.</span></span>
+      <span class="big"><span class="spaced">CTS</span><span class="dot">.</span></span>
     </h1>
 
     <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -50,13 +50,14 @@ const year = new Date().getFullYear();
     border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem;
   }
 
-  .seal { width: 240px; height: 240px; margin: 2.4rem auto 0.8rem; mix-blend-mode: multiply; }
+  .seal { width: 320px; height: 320px; margin: 2.4rem auto 0.8rem; mix-blend-mode: multiply; }
 
   /* Overskrift som på magasin-coveret: lille kursiv + stor serif med punktum */
   h1 { text-transform: none; line-height: 1; margin: 0; }
   .pre { display: block; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 2.6rem); color: var(--ink-soft); }
-  .big { display: block; font-family: var(--font-serif); font-weight: 700; font-size: clamp(3.6rem, 9vw, 6rem); letter-spacing: -0.02em; color: var(--navy); line-height: 0.95; }
-  .dot { color: var(--orange); }
+  .big { display: block; font-family: var(--font-serif); font-weight: 700; font-size: clamp(3.6rem, 9vw, 6rem); color: var(--navy); line-height: 0.95; }
+  .spaced { letter-spacing: 0.22em; }
+  .dot { color: var(--orange); margin-left: -0.2em; }
 
   /* Strap mellem to streger med skråstreg (magasin) */
   .strap {
@@ -81,7 +82,7 @@ const year = new Date().getFullYear();
 
   @media (max-width: 560px) {
     .issue { font-size: 0.66rem; letter-spacing: 0.16em; }
-    .seal { width: 190px; height: 190px; margin-top: 1.8rem; }
+    .seal { width: 240px; height: 240px; margin-top: 1.8rem; }
     .strap { font-size: 0.72rem; letter-spacing: 0.1em; }
     .strap span { padding: 0.55rem 0.7rem; }
   }
