@@ -7,7 +7,7 @@ interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const doors = [
   { no: '01', slug: 'lego', icon: 'brick', color: 'var(--mustard)', title: 'door.lego.title', text: 'door.lego.text', soon: false },
-  { no: '02', slug: 'retro', icon: 'lamp', color: 'var(--orange)', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { no: '02', slug: 'retro', icon: 'lamp', color: 'var(--orange)', title: 'door.retro.title', text: null, soon: false },
   { no: '03', slug: 'services', icon: 'city', color: 'var(--navy)', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
 ---
@@ -24,7 +24,7 @@ const doors = [
         <span class="body">
           <span class="no">No. {d.no}</span>
           <h3>{t(lang, d.title)}</h3>
-          <p>{t(lang, d.text)}</p>
+          {d.text && <p>{t(lang, d.text)}</p>}
           <span class="btn">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
         </span>
       </a>
