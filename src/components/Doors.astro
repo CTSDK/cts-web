@@ -1,95 +1,40 @@
 ---
-// Afdelingerne som mosaik (én stor + to mindre fliser, runde "+"-knapper som på LEGO-siden).
-// LEGO har foto. Retro og Services er typografiske fliser, indtil der kommer fotos.
-import { t, href, type Lang, asset } from '../i18n/ui';
+import Icon from './Icon.astro';
+import { t, href, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const tiles = [
-  { no: '01', slug: 'lego', kind: 'lego', photo: 'img/lego-sorteret.jpg', tag: 'badge.lego', title: 'door.lego.title', text: 'door.lego.text', soon: false },
-  { no: '02', slug: 'retro', kind: 'retro', photo: '', tag: 'badge.retro', title: 'door.retro.title', text: 'door.retro.text', soon: false },
-  { no: '03', slug: 'services', kind: 'services', photo: '', tag: 'badge.services', title: 'door.services.title', text: 'door.services.text', soon: true },
+const doors = [
+  { slug: 'lego', icon: 'brick', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { slug: 'retro', icon: 'lamp', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { slug: 'services', icon: 'city', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
 ---
-<ul class="mosaic">
-  {tiles.map((d) => (
-    <li class={d.kind}>
-      <a class="tile" href={href(lang, d.slug)}>
-        {d.photo
-          ? <span class="pic"><img src={asset(d.photo)} alt="" width="1123" height="1400" loading="lazy" /></span>
-          : <span class="pic" aria-hidden="true"><span class="bands"><span></span><span></span><span></span></span></span>}
-        <span class="tag">{t(lang, d.tag)}</span>
-        <span class="box">
-          <span class="kicker">No. {d.no}</span>
-          <span class="title">{t(lang, d.title)}</span>
-          <span class="text">{t(lang, d.text)}</span>
-          <span class="go">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
-        </span>
-        <span class="plus" aria-hidden="true">+</span>
+<ul class="doors">
+  {doors.map((d) => (
+    <li>
+      <a class="door" href={href(lang, d.slug)}>
+        <Icon name={d.icon} />
+        <h3>{t(lang, d.title)}</h3>
+        <p>{t(lang, d.text)}</p>
+        <span class="enter">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
       </a>
     </li>
   ))}
 </ul>
 
 <style>
-  .mosaic {
-    list-style: none; padding: 0; margin: 2rem 0 0;
-    display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: 16px;
+  .doors { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+  /* "Dør" med buet top og dobbelt ramme – som en gammel butiksdør */
+  .door {
+    display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%;
+    padding: 56px 22px 26px; text-decoration: none; color: var(--ink);
+    background: var(--paper-deep);
+    border: 3px double var(--ink);
+    border-radius: 140px 140px 4px 4px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .lego { grid-row: 1 / 3; }
-  .tile { position: relative; display: flex; height: 100%; min-height: 290px; overflow: hidden; text-decoration: none; color: var(--ink); }
-  .lego .tile { min-height: 640px; }
-  .pic { position: absolute; inset: 0; transition: transform 0.5s ease; }
-  .pic img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.9); }
-  .tile:hover .pic { transform: scale(1.03); }
-
-  /* Typografiske fliser */
-  .retro .pic { background: var(--paper-deep); }
-  .services .pic { background: var(--navy); }
-  .bands { position: absolute; top: 0; bottom: 0; right: 0; width: 18%; display: grid; grid-template-columns: repeat(3, 1fr); }
-  .retro .bands span:nth-child(1) { background: var(--orange); }
-  .retro .bands span:nth-child(2) { background: var(--red); }
-  .retro .bands span:nth-child(3) { background: var(--mustard); }
-  .services .bands span:nth-child(1) { background: var(--navy-deep); }
-  .services .bands span:nth-child(2) { background: var(--blue); }
-  .services .bands span:nth-child(3) { background: var(--mustard); }
-
-  /* Tekstboks (magasin) */
-  .box { position: relative; z-index: 1; align-self: flex-end; display: flex; flex-direction: column; gap: 4px; }
-  .lego .box { margin: 0 0 22px 22px; width: min(380px, 70%); background: var(--paper); padding: 16px 20px 18px; border-top: 5px solid var(--orange); }
-  .retro .box, .services .box { padding: 22px 24px; width: 78%; }
-  .services .box { color: var(--paper); }
-  .kicker { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; color: var(--orange); }
-  .services .kicker { color: var(--mustard); }
-  .title { font-family: var(--font-display); text-transform: uppercase; font-size: 2.3rem; line-height: 1; }
-  .lego .title { font-size: 3rem; }
-  .text { font-size: 0.92rem; line-height: 1.5; opacity: 0.85; }
-  .go { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.85rem; margin-top: 8px; }
-  .tile:hover .go { color: var(--orange); }
-
-  /* Lille lige etiket (ikke tegneserie-mærke) */
-  .tag {
-    position: absolute; z-index: 1; top: 20px; left: 20px;
-    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.72rem;
-    padding: 6px 12px; background: var(--navy); color: var(--paper);
-  }
-  .services .tag { background: var(--orange); }
-
-  /* Rund "+"-knap som på LEGO-siden */
-  .plus {
-    position: absolute; z-index: 1; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%;
-    background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-    display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 1.4rem; line-height: 1;
-  }
-  .retro .plus, .services .plus { right: calc(18% + 16px); }
-  .tile:hover .plus { background: var(--orange); color: #fff; }
-
-  @media (max-width: 860px) {
-    .mosaic { grid-template-columns: 1fr; grid-template-rows: auto; }
-    .lego { grid-row: auto; }
-    .lego .tile { min-height: 520px; }
-    .tile { min-height: 240px; }
-    .lego .box { margin: 0 14px 14px; width: auto; }
-    .retro .box, .services .box { width: 80%; }
-    .lego .title { font-size: 2.4rem; }
-  }
+  .door:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--ink); color: var(--ink); }
+  .door p { margin: 0 0 1.2rem; color: var(--ink-soft); }
+  .door h3 { margin-top: 0.6rem; }
+  .enter { margin-top: auto; font-family: var(--font-display); color: var(--accent); letter-spacing: 0.05em; }
 </style>

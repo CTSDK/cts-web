@@ -8,9 +8,8 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@fontsource/anton": "5.3.0",
-    "@fontsource/courier-prime": "5.3.0",
-    "@fontsource/oswald": "5.3.0",
-    "astro": "7.4.13"
+    "astro": "7.4.13",
+    "@fontsource/eb-garamond": "5.3.0",
+    "@fontsource/im-fell-english-sc": "5.3.0"
   }
 }
