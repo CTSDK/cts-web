@@ -12,6 +12,10 @@ export const ui = {
     'nav.retro': 'Retro Design',
     'nav.services': 'Copenhagen Services',
     'home.title': 'Welcome to CTS',
+    'home.pre': 'Welcome to',
+    'issue.left': 'Copenhagen · Denmark',
+    'issue.right': 'Issue No. 01',
+    'strap.left': 'Found · Restored · Passed on',
     'home.intro':
       'A small Danish business with a fondness for things that were made to last. We find them, sort them, restore them and give them a new home.',
     'home.choose': 'Choose a department',
@@ -52,6 +56,10 @@ export const ui = {
     'nav.retro': 'Retro Design',
     'nav.services': 'Copenhagen Services',
     'home.title': 'Willkommen bei CTS',
+    'home.pre': 'Willkommen bei',
+    'issue.left': 'Kopenhagen · Dänemark',
+    'issue.right': 'Ausgabe Nr. 01',
+    'strap.left': 'Gefunden · Aufgearbeitet · Weitergegeben',
     'home.intro':
       'Ein kleines dänisches Unternehmen mit einer Vorliebe für Dinge, die für die Ewigkeit gemacht wurden. Wir finden sie, sortieren sie, arbeiten sie auf und geben ihnen ein neues Zuhause.',
     'home.choose': 'Wählen Sie eine Abteilung',

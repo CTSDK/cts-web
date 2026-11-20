@@ -1,7 +1,7 @@
 /* ---------- CTS-stil (inspireret af gamle pladecovers): farver og skrift samles her ---------- */
 :root {
-  --paper: #fcfaf5;       /* næsten hvidt papir */
-  --paper-deep: #f3ecdd;  /* lys creme til kort */
+  --paper: #fefdfb;       /* hvidt papir som i magasinet */
+  --paper-deep: #f6f1e7;  /* lys creme til kort */
   --ink: #17140f;         /* næsten sort */
   --ink-soft: #4a4136;
   --navy: #1c2b3d;        /* dyb marineblå */
@@ -13,6 +13,7 @@
   --accent: var(--orange);
   --font-display: 'Anton', 'Oswald', Impact, 'Arial Narrow', sans-serif;  /* store, smalle, fede overskrifter */
   --font-label: 'Oswald', 'Arial Narrow', sans-serif;                     /* etiketter, menu, knapper */
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;  /* magasin-overskrift */
   --font-body: 'Courier Prime', 'Courier New', monospace;                 /* skrivemaskine til brødtekst */
   --max: 1200px;
 }
