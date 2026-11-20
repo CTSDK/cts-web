@@ -1,126 +1,100 @@
 ---
+// Forsiden som et magasin-cover (opbygning fra rejsemagasinet, stil fra Stone Groove).
 import Base from '../../layouts/Base.astro';
 import Doors from '../Doors.astro';
 import { t, type Lang, asset } from '../../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const index = [
-  { no: '01', key: 'nav.lego' },
-  { no: '02', key: 'nav.retro' },
-  { no: '03', key: 'nav.services' },
-] as const;
+const year = new Date().getFullYear();
 ---
 <Base lang={lang}>
-  <section class="cover">
-    <div class="wrap grid">
+  <section class="wrap cover">
+    <div class="issue">
+      <span>{t(lang, 'hero.label')}</span>
+      <span class="line" aria-hidden="true"></span>
+      <span>{t(lang, 'cover.issue')} · {year}</span>
+    </div>
+
+    <div class="grid">
       <div class="text">
-        <p class="label">{t(lang, 'hero.label')}</p>
         <h1>
           <span class="l1">{t(lang, 'hero.line1')}</span>
           <span class="l2">{t(lang, 'hero.line2')}</span>
         </h1>
-        <p class="sub">{t(lang, 'hero.sub')}</p>
+        <p class="strap"><span>{t(lang, 'hero.sub')}</span></p>
         <p class="intro">{t(lang, 'home.intro')}</p>
         <a class="btn" href="#departments">{t(lang, 'hero.cta')} ↓</a>
       </div>
 
-      <aside class="index" aria-hidden="true">
-        <span class="code">CTS-001</span>
-        <span class="kind">Index</span>
-        {index.map((i) => <span class="row"><b>{i.no}</b> {t(lang, i.key)}</span>)}
-      </aside>
-
-      <div class="panel" aria-hidden="true">
-        <div class="bands"><span></span><span></span><span></span><span></span></div>
-        <div class="record">
-          <div class="grooves"></div>
-          <div class="center"><img src={asset('logo-segl.png')} alt="" width="600" height="600" /></div>
-        </div>
-        <div class="card">
-          <p class="side"><span>Side A</span><span>CTS-001</span></p>
-          <p class="big">No. 01–03</p>
-          <p class="small">{t(lang, 'hero.card')}</p>
-        </div>
-      </div>
+      <!-- Coverbillede: seglet indtil videre – her kommer Thomas' foto senere -->
+      <figure class="photo">
+        <div class="stripes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+        <img class="seal" src={asset('logo-segl.png')} alt="CTS – Copenhagen Treasures & Services, Denmark" width="600" height="600" />
+        <figcaption>{t(lang, 'cover.caption')}</figcaption>
+      </figure>
     </div>
   </section>
 
   <section id="departments" class="wrap departments">
-    <p class="label">{t(lang, 'contents')} · {t(lang, 'site.name')}</p>
+    <div class="issue">
+      <span>{t(lang, 'cover.inside')}</span>
+      <span class="line" aria-hidden="true"></span>
+      <span>01 – 03</span>
+    </div>
     <h2>{t(lang, 'home.choose')}</h2>
     <Doors lang={lang} />
   </section>
 </Base>
 
 <style>
-  .cover { border-bottom: 1.5px solid var(--ink); background: radial-gradient(ellipse at 30% 40%, transparent 50%, rgba(110, 80, 40, 0.16) 100%); }
-  .grid {
-    display: grid; grid-template-columns: minmax(0, 1.25fr) 150px minmax(0, 1fr);
-    gap: 0 32px; padding-top: 3rem; padding-bottom: 3rem; align-items: stretch;
+  /* Magasinets tynde "trykte" linje med versaler */
+  .issue {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.85rem;
+    border-bottom: 3px double var(--ink); padding: 1.6rem 0 0.7rem;
   }
-  .text { align-self: center; }
-  h1 { margin: 0.6rem 0 1.4rem; }
+  .issue .line { flex: 1; border-top: 1.5px solid var(--ink); }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; padding: 2.6rem 0 3rem; align-items: center; }
+  h1 { margin: 0 0 1.4rem; font-size: clamp(2.8rem, 7vw, 6rem); }
+  :global(html[lang='de']) h1 { font-size: clamp(2.3rem, 5.4vw, 4.8rem); }
   h1 span { display: block; }
-  /* Tysk har længere ord: lidt mindre overskrift, så den ikke rammer index-spalten */
-  :global(html[lang='de']) h1 { font-size: clamp(2.2rem, 5.2vw, 4.7rem); }
   .l2 { color: var(--orange); }
-  .sub { font-family: var(--font-label); font-weight: 500; font-size: 1.3rem; letter-spacing: 0.01em; margin: 0 0 0.8rem; }
-  .intro { color: var(--ink-soft); max-width: 36rem; margin: 0 0 1.6rem; }
 
-  /* Katalogspalte som på et pladecover */
-  .index {
-    display: flex; flex-direction: column; gap: 10px; align-self: center;
-    border-left: 1.5px solid var(--ink); padding: 10px 0 10px 18px;
-    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;
-  }
-  .index .code, .index .kind { font-weight: 500; border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; }
-  .index .row { font-size: 0.82rem; color: var(--ink-soft); }
-  .index b { color: var(--ink); font-weight: 500; margin-right: 4px; }
+  /* Strap-line mellem to streger, som på magasinforsiden */
+  .strap { border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 0.55rem 0; margin: 0 0 1.2rem; }
+  .strap span { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; font-size: 1rem; }
+  .intro { color: var(--ink-soft); max-width: 34rem; margin: 0 0 1.6rem; }
 
-  /* Højre panel: farvebånd, plade med seglet som etiket, lille kort */
-  .panel { position: relative; background: var(--navy); min-height: 520px; overflow: hidden; }
-  .bands { position: absolute; inset: 0 auto 0 0; width: 34%; display: grid; grid-template-columns: repeat(4, 1fr); }
-  .bands span:nth-child(1) { background: var(--blue); }
-  .bands span:nth-child(2) { background: var(--mustard); }
-  .bands span:nth-child(3) { background: var(--red); }
-  .bands span:nth-child(4) { background: var(--orange); }
-  .record {
-    position: absolute; width: 92%; aspect-ratio: 1; top: 6%; left: 14%;
-    border-radius: 50%; background: #0d0d0d;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  /* Coverbilledet */
+  .photo {
+    position: relative; margin: 0; aspect-ratio: 4 / 5; background: var(--navy);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    box-shadow: 10px 10px 0 var(--ink);
   }
-  .grooves {
-    position: absolute; inset: 0; border-radius: 50%;
-    background:
-      radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.10), transparent 45%),
-      repeating-radial-gradient(circle, #111 0 2px, #1d1d1d 2px 3px);
+  .stripes { position: absolute; top: 0; bottom: 0; right: 0; width: 22%; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stripes span:nth-child(1) { background: var(--blue); }
+  .stripes span:nth-child(2) { background: var(--mustard); }
+  .stripes span:nth-child(3) { background: var(--red); }
+  .stripes span:nth-child(4) { background: var(--orange); }
+  .seal {
+    position: relative; width: 62%; margin-right: 18%; border-radius: 50%;
+    background: var(--paper); padding: 4%; box-sizing: content-box; border: 3px solid var(--mustard);
   }
-  .center {
-    position: absolute; width: 40%; aspect-ratio: 1; top: 30%; left: 30%;
-    border-radius: 50%; background: var(--paper); overflow: hidden;
-    border: 4px solid var(--mustard);
+  figcaption {
+    position: absolute; left: 0; bottom: 0; right: 22%;
+    background: var(--paper); color: var(--ink); padding: 12px 18px;
+    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.78rem;
+    border-top: 5px solid var(--orange);
   }
-  .center img { width: 100%; height: 100%; }
-  .card {
-    position: absolute; right: 0; bottom: 0; width: 64%;
-    background: var(--paper); color: var(--ink); padding: 18px 22px 20px;
-    border-top: 6px solid var(--orange);
-  }
-  .card p { margin: 0; }
-  .side { display: flex; justify-content: space-between; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.85rem; border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; margin-bottom: 10px !important; }
-  .big { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; text-transform: uppercase; }
-  .small { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.85rem; margin-top: 8px !important; }
 
-  .departments { padding-top: 3.5rem; }
-  .departments h2 { margin-top: 0.8rem; }
+  .departments { padding-top: 2rem; }
+  .departments h2 { margin-top: 1.6rem; }
 
-  @media (max-width: 960px) {
-    .grid { grid-template-columns: 1fr; gap: 28px; padding-top: 2rem; }
-    .index { flex-direction: row; flex-wrap: wrap; gap: 6px 18px; border-left: 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 10px 0; }
-    .index .code, .index .kind { border-bottom: 0; padding-bottom: 0; }
-    .panel { min-height: 0; aspect-ratio: auto; display: flex; flex-direction: column; }
-    .bands { width: 30%; }
-    .record { position: relative; width: 84%; top: auto; left: auto; margin: 7% 0 7% 12%; }
-    .card { position: relative; width: auto; margin-left: 30%; }
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; gap: 36px; padding-top: 1.8rem; }
+    .photo { aspect-ratio: 1 / 1; box-shadow: 6px 6px 0 var(--ink); margin-right: 6px; padding-bottom: 14%; }
+    .seal { width: 50%; }
+    .issue { letter-spacing: 0.2em; font-size: 0.75rem; gap: 10px; }
   }
 </style>
