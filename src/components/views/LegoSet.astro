@@ -2,7 +2,7 @@
 // Salgsside for ét LEGO-sæt – opbygget som en produktside på LEGO.com, i CTS-stil.
 import Base from '../../layouts/Base.astro';
 import { t, href, type Lang } from '../../i18n/ui';
-import { getSet, themeOf } from '../../data/lego';
+import { getSet, themeOf, formatPrice } from '../../data/lego';
 interface Props { lang: Lang; no: string; }
 const { lang, no } = Astro.props;
 const s = getSet(no);
@@ -44,7 +44,7 @@ const paragraphs = s.text[lang].split('\n\n');
 
         <div class="pricebox">
           <p class="stock"><span class="dot" aria-hidden="true"></span>{t(lang, 'set.instock')}</p>
-          <p class="price"><span>{t(lang, 'set.price')}</span> <b>{t(lang, 'set.price.soon')}</b></p>
+          <p class="price"><span>{t(lang, 'set.price')}</span> {s.priceEur ? <b class="amount">{formatPrice(s.priceEur, lang)}</b> : <b>{t(lang, 'set.price.soon')}</b>}</p>
           <span class="buybtn" aria-disabled="true">{t(lang, 'set.buy.soon')}</span>
           <p class="checked">✓ {t(lang, 'set.checked')}</p>
         </div>
@@ -116,6 +116,7 @@ const paragraphs = s.text[lang].split('\n\n');
   .stock .dot { width: 10px; height: 10px; border-radius: 50%; background: #2e9a4a; }
   .price { margin: 0.8rem 0 1rem !important; font-size: 1.1rem; }
   .price span { color: var(--ink-soft); }
+  .price .amount { font-family: var(--font-display); font-weight: 400; font-size: 2.4rem; letter-spacing: 0.02em; text-transform: none; color: var(--ink); vertical-align: middle; margin-left: 6px; }
   .price b { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
   .buybtn {
     display: block; text-align: center; padding: 14px; border-radius: 999px; background: #c9c3b6; color: #fff;

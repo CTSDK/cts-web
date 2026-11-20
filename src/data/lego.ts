@@ -37,6 +37,7 @@ export interface LegoSet {
   pieces: number;
   minifigs: string[];
   condition: number; // 1–10
+  priceEur?: number; // fra cts-app → Indkøb
   intro: T;
   text: T;
   included: Record<Lang, string[]>;
@@ -53,6 +54,7 @@ export const sets: LegoSet[] = [
     pieces: 215,
     minifigs: ['Obi-Wan Kenobi', 'R4‑P17'],
     condition: 9,
+    priceEur: 45, // cts-app → Indkøb: 'BL or eBay Average (€)' (feltet 'Sættes til salg for' var tomt)
     intro: {
       en: 'Obi-Wan Kenobi’s red and grey Jedi Interceptor – complete, checked piece by piece and with the original box.',
       de: 'Obi-Wan Kenobis rot-grauer Jedi Interceptor – vollständig, Teil für Teil geprüft und mit Originalkarton.',
@@ -70,3 +72,7 @@ export const sets: LegoSet[] = [
 
 export const getSet = (no: string) => sets.find((s) => s.no === no)!;
 export const themeOf = (slug: string) => themes.find((t) => t.slug === slug)!;
+
+// Pris vist som € 45,00 (de) / €45.00 (en)
+export const formatPrice = (eur: number, lang: Lang) =>
+  new Intl.NumberFormat(lang === 'de' ? 'de-DE' : 'en-IE', { style: 'currency', currency: 'EUR' }).format(eur);
