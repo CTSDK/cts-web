@@ -19,14 +19,13 @@ const year = new Date().getFullYear();
 
     <img class="seal" src={asset('logo-segl.png')} alt="" width="200" height="200" />
 
-    <h1>
-      <span class="pre">{t(lang, 'home.pre')}</span>
-      <span class="big"><span class="spaced">CTS</span><span class="dot">.</span></span>
-    </h1>
-
-    <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-
-    <Doors lang={lang} />
+    <Doors lang={lang}>
+      <h1>
+        <span class="pre">{t(lang, 'home.pre')}</span>
+        <span class="big"><span class="spaced">CTS</span><span class="dot">.</span></span>
+      </h1>
+      <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    </Doors>
 
     <!-- Teksten 'strap.left' + 'home.intro' er gemt i src/i18n/ui.ts til senere brug. -->
   </section>
@@ -42,7 +41,7 @@ const year = new Date().getFullYear();
     border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem;
   }
 
-  .seal { width: 320px; height: 320px; margin: 4rem auto 0.8rem; mix-blend-mode: multiply; }
+  .seal { width: 320px; height: 320px; margin: 5rem auto var(--seal-gap, 2.5rem); mix-blend-mode: multiply; }
 
   /* Overskrift som på magasin-coveret: lille kursiv + stor serif med punktum */
   h1 { text-transform: none; line-height: 1; margin: 0; }
@@ -64,7 +63,7 @@ const year = new Date().getFullYear();
   .about { margin-top: 4rem; }
   .lead { font-size: 1.05rem; line-height: 1.8; max-width: 36rem; }
 
-  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.2rem 0 0; }
+  .bars { display: flex; justify-content: center; gap: 6px; margin: 1.4rem 0 0; }
   .bars span { width: 34px; height: 6px; }
   .bars span:nth-child(1) { background: var(--blue); }
   .bars span:nth-child(2) { background: var(--mustard); }
