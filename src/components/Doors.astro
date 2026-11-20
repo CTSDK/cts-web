@@ -2,11 +2,11 @@
 // De tre afdelinger som runde billedvinduer (farveflade nu, foto senere)
 // med rund "+"-knap som på LEGO-siden. Under: Stone Groove-typografi.
 import Icon from './Icon.astro';
-import { t, href, type Lang } from '../i18n/ui';
+import { t, href, asset, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const doors = [
-  { no: '01', slug: 'lego', icon: 'brick', color: 'var(--mustard)', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { no: '01', slug: 'lego', icon: 'brick', color: 'var(--mustard)', photo: 'img/lego/themes/star-wars.jpg', title: 'door.lego.title', text: 'door.lego.text', soon: false },
   { no: '02', slug: 'retro', icon: 'lamp', color: 'var(--orange)', title: 'door.retro.title', text: 'door.retro.text', soon: false },
   { no: '03', slug: 'services', icon: 'city', color: 'var(--navy)', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
@@ -18,7 +18,7 @@ const doors = [
     <li class={`d-${d.slug}`}>
       <a class="door" href={href(lang, d.slug)} style={`--c: ${d.color}`}>
         <span class="window">
-          <Icon name={d.icon} />
+          {'photo' in d && d.photo ? <img class="photo" src={asset(d.photo)} alt="" width="480" height="480" /> : <Icon name={d.icon} />}
           <span class="plus" aria-hidden="true">+</span>
         </span>
         <span class="body">
@@ -66,6 +66,7 @@ const doors = [
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .door:hover .window { transform: translateY(-4px); box-shadow: 0 0 0 6px var(--paper), 0 0 0 7px var(--ink), 0 16px 30px rgba(28, 43, 61, 0.18); }
+  .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
   .window :global(.icon) { width: 44%; height: auto; color: var(--paper); }
   .plus {
     position: absolute; right: 8%; bottom: 8%; width: 36px; height: 36px; border-radius: 50%;
