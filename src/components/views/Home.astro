@@ -1,100 +1,206 @@
 ---
-// Forsiden som et magasin-cover (opbygning fra rejsemagasinet, stil fra Stone Groove).
+// Forsiden: Stone Groove-stil (lag, farveblokke, katalogspalte) + magasin-opslag + fotomosaik som på LEGO-siden.
 import Base from '../../layouts/Base.astro';
 import Doors from '../Doors.astro';
+import Illus from '../Illus.astro';
 import { t, type Lang, asset } from '../../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 const year = new Date().getFullYear();
+const index = [
+  { no: '01', key: 'nav.lego' },
+  { no: '02', key: 'nav.retro' },
+  { no: '03', key: 'nav.services' },
+] as const;
+const steps = ['1', '2', '3', '4'] as const;
 ---
 <Base lang={lang}>
-  <section class="wrap cover">
-    <div class="issue">
-      <span>{t(lang, 'hero.label')}</span>
-      <span class="line" aria-hidden="true"></span>
-      <span>{t(lang, 'cover.issue')} · {year}</span>
-    </div>
-
-    <div class="grid">
+  <!-- ===== COVER ===== -->
+  <section class="hero">
+    <div class="hero-in">
       <div class="text">
+        <p class="label">{t(lang, 'hero.label')}</p>
         <h1>
           <span class="l1">{t(lang, 'hero.line1')}</span>
           <span class="l2">{t(lang, 'hero.line2')}</span>
         </h1>
-        <p class="strap"><span>{t(lang, 'hero.sub')}</span></p>
+        <p class="sub">{t(lang, 'hero.sub')}</p>
         <p class="intro">{t(lang, 'home.intro')}</p>
         <a class="btn" href="#departments">{t(lang, 'hero.cta')} ↓</a>
       </div>
 
-      <!-- Coverbillede: seglet indtil videre – her kommer Thomas' foto senere -->
-      <figure class="photo">
-        <div class="stripes" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <img class="seal" src={asset('logo-segl.png')} alt="CTS – Copenhagen Treasures & Services, Denmark" width="600" height="600" />
-        <figcaption>{t(lang, 'cover.caption')}</figcaption>
-      </figure>
+      <aside class="index" aria-hidden="true">
+        <span class="code">CTS</span>
+        <span class="code">{t(lang, 'cover.issue')}</span>
+        {index.map((i) => <span class="row"><b>0{i.no}</b></span>)}
+      </aside>
+
+      <div class="collage worn" aria-hidden="true">
+        <span class="st s1"></span><span class="st s2"></span><span class="st s3"></span>
+        <div class="poster">
+          <div class="burst"></div>
+          <div class="seal"><img src={asset('logo-segl.png')} alt="" width="600" height="600" /></div>
+          <div class="ribbon">CTS · {t(lang, 'footer.country')}</div>
+        </div>
+        <div class="c-top">
+          <p class="row2"><span>{t(lang, 'hero.dept')}</span><span>01–03</span></p>
+          <p class="big-l">LEGO® · Retro</p>
+          <p class="mid-l">Copenhagen Services</p>
+          <p class="sm-l">{t(lang, 'hero.city')}</p>
+        </div>
+        <div class="c-mid">
+          <p class="cts">CTS</p>
+          <p class="tag">{t(lang, 'hero.tag1')}</p>
+          <span class="dash"></span>
+          <p class="tag2">{t(lang, 'hero.tag2')}</p>
+        </div>
+        <div class="c-bot"><p>{t(lang, 'hero.foot')}</p></div>
+        <span class="bl b1"></span><span class="bl b2"></span><span class="bl b3"></span>
+      </div>
     </div>
   </section>
 
-  <section id="departments" class="wrap departments">
+  <!-- ===== AFDELINGER: fotomosaik ===== -->
+  <section id="departments" class="wrap block">
     <div class="issue">
       <span>{t(lang, 'cover.inside')}</span>
       <span class="line" aria-hidden="true"></span>
-      <span>01 – 03</span>
+      <span>{t(lang, 'cover.issue')} · {year}</span>
     </div>
     <h2>{t(lang, 'home.choose')}</h2>
     <Doors lang={lang} />
   </section>
+
+  <!-- ===== MAGASIN-OPSLAG: sådan arbejder vi ===== -->
+  <section class="wrap block spread">
+    <figure class="spread-pic worn">
+      <Illus name="lamp" />
+      <figcaption class="quote">{t(lang, 'craft.quote')}</figcaption>
+    </figure>
+    <div class="spread-text">
+      <p class="label">{t(lang, 'craft.label')}</p>
+      <h2>{t(lang, 'craft.title')}</h2>
+      <ol class="steps">
+        {steps.map((n) => (
+          <li>
+            <span class="num">00{n}</span>
+            <h3>{t(lang, `craft.${n}.t` as any)}</h3>
+            <p>{t(lang, `craft.${n}.x` as any)}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 </Base>
 
 <style>
-  /* Magasinets tynde "trykte" linje med versaler */
+  /* ---------- Cover ---------- */
+  .hero { border-bottom: 1.5px solid var(--ink); background: radial-gradient(ellipse at 25% 40%, transparent 45%, rgba(110, 80, 40, 0.18) 100%); }
+  .hero-in {
+    max-width: var(--max); margin: 0 auto; padding: 2.6rem 16px 3rem;
+    display: grid; grid-template-columns: minmax(0, 1.1fr) 92px minmax(0, 1.25fr); gap: 0 28px; align-items: center;
+  }
+  h1 { margin: 0.8rem 0 1.2rem; font-size: clamp(2.8rem, 6.6vw, 6.4rem); }
+  :global(html[lang='de']) h1 { font-size: clamp(2.3rem, 5vw, 4.9rem); }
+  h1 span { display: block; }
+  .l2 { color: var(--orange); }
+  .sub { font-family: var(--font-label); font-weight: 500; font-size: 1.35rem; color: var(--navy); margin: 0 0 0.7rem; line-height: 1.3; }
+  .intro { color: var(--ink-soft); max-width: 34rem; margin: 0 0 1.6rem; }
+
+  .index {
+    display: flex; flex-direction: column; gap: 12px; align-self: start; margin-top: 4.5rem;
+    border-left: 1.5px solid var(--ink); padding: 6px 0 6px 14px;
+    font-family: var(--font-body); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .index .code { border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; }
+  .index b { font-weight: 400; color: var(--ink-soft); }
+
+  /* Collage i lag: striber, plakat med segl, kort, farveblokke */
+  .collage {
+    display: grid; min-height: 600px; background: var(--navy);
+    grid-template-columns: 5% 5% 5% minmax(0, 1fr) minmax(0, 0.95fr) 5%;
+    grid-template-rows: auto 1fr auto;
+  }
+  .st { grid-row: 1 / 4; }
+  .s1 { grid-column: 1; background: var(--blue); }
+  .s2 { grid-column: 2; background: var(--mustard); }
+  .s3 { grid-column: 3; background: var(--red); }
+  .poster { grid-column: 4; grid-row: 1 / 4; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 30px 16px; }
+  .burst { position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 50% 50%, var(--orange) 0deg 9deg, #b04d16 9deg 18deg); }
+  .seal { position: relative; width: 78%; aspect-ratio: 1; border-radius: 50%; background: var(--paper); border: 5px solid var(--navy); box-shadow: 0 0 0 4px var(--mustard), 0 12px 30px rgba(0, 0, 0, 0.35); overflow: hidden; }
+  .seal img { width: 100%; height: 100%; }
+  .ribbon { position: relative; background: var(--navy); color: var(--mustard); font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 22px; transform: rotate(-3deg); box-shadow: 4px 4px 0 var(--ink); }
+
+  .c-top, .c-mid, .c-bot { grid-column: 5; padding: 20px 22px; }
+  .c-top { grid-row: 1; color: var(--paper); border-left: 1.5px solid rgba(239, 228, 204, 0.5); }
+  .c-top p, .c-mid p, .c-bot p { margin: 0; }
+  .row2 { display: flex; justify-content: space-between; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.8rem; border-bottom: 1.5px solid rgba(239, 228, 204, 0.6); padding-bottom: 8px; margin-bottom: 12px !important; }
+  .big-l { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.16em; font-size: 1.25rem; }
+  .mid-l { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.95rem; color: var(--mustard); }
+  .sm-l { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; margin-top: 14px !important; opacity: 0.8; }
+  .c-mid { grid-row: 2; background: var(--paper); color: var(--ink); display: flex; flex-direction: column; justify-content: center; margin: 0 0 0 -18px; box-shadow: -8px 8px 0 rgba(0, 0, 0, 0.3); position: relative; }
+  .cts { font-family: var(--font-display); font-size: clamp(3.4rem, 6vw, 5.2rem); line-height: 0.9; }
+  .tag { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.35em; font-size: 0.95rem; margin-top: 8px !important; }
+  .dash { display: block; width: 40px; border-top: 2px solid var(--navy); margin: 14px 0; }
+  .tag2 { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.25em; font-size: 0.8rem; color: var(--orange); }
+  .c-bot { grid-row: 3; color: var(--paper); font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.82rem; line-height: 1.7; border-top: 1.5px solid rgba(239, 228, 204, 0.5); }
+  .bl { grid-column: 6; }
+  .b1 { grid-row: 1; background: var(--red); }
+  .b2 { grid-row: 2; background: var(--navy-deep); }
+  .b3 { grid-row: 3; background: var(--mustard); }
+
+  /* Slidte kanter */
+  .worn { position: relative; }
+  .worn::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Fælles for sektionerne ---------- */
+  .block { padding-top: 3.5rem; }
   .issue {
     display: flex; align-items: center; gap: 18px;
     font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.85rem;
-    border-bottom: 3px double var(--ink); padding: 1.6rem 0 0.7rem;
+    border-bottom: 3px double var(--ink); padding-bottom: 0.7rem;
   }
   .issue .line { flex: 1; border-top: 1.5px solid var(--ink); }
+  .block h2 { margin-top: 1.4rem; }
 
-  .grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; padding: 2.6rem 0 3rem; align-items: center; }
-  h1 { margin: 0 0 1.4rem; font-size: clamp(2.8rem, 7vw, 6rem); }
-  :global(html[lang='de']) h1 { font-size: clamp(2.3rem, 5.4vw, 4.8rem); }
-  h1 span { display: block; }
-  .l2 { color: var(--orange); }
-
-  /* Strap-line mellem to streger, som på magasinforsiden */
-  .strap { border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 0.55rem 0; margin: 0 0 1.2rem; }
-  .strap span { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.12em; font-size: 1rem; }
-  .intro { color: var(--ink-soft); max-width: 34rem; margin: 0 0 1.6rem; }
-
-  /* Coverbilledet */
-  .photo {
-    position: relative; margin: 0; aspect-ratio: 4 / 5; background: var(--navy);
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
-    box-shadow: 10px 10px 0 var(--ink);
+  /* ---------- Magasin-opslag ---------- */
+  .spread { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; padding-top: 5rem; }
+  .spread-pic { margin: 0; background: var(--navy); padding: 40px 30px 0; position: relative; overflow: hidden; box-shadow: 10px 10px 0 var(--orange); }
+  .quote {
+    position: absolute; top: 24px; right: 24px; width: 46%;
+    background: var(--paper); padding: 14px 16px; border-left: 6px solid var(--mustard);
+    font-family: var(--font-display); text-transform: uppercase; font-size: 1.6rem; line-height: 1;
   }
-  .stripes { position: absolute; top: 0; bottom: 0; right: 0; width: 22%; display: grid; grid-template-columns: repeat(4, 1fr); }
-  .stripes span:nth-child(1) { background: var(--blue); }
-  .stripes span:nth-child(2) { background: var(--mustard); }
-  .stripes span:nth-child(3) { background: var(--red); }
-  .stripes span:nth-child(4) { background: var(--orange); }
-  .seal {
-    position: relative; width: 62%; margin-right: 18%; border-radius: 50%;
-    background: var(--paper); padding: 4%; box-sizing: content-box; border: 3px solid var(--mustard);
-  }
-  figcaption {
-    position: absolute; left: 0; bottom: 0; right: 22%;
-    background: var(--paper); color: var(--ink); padding: 12px 18px;
-    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.78rem;
-    border-top: 5px solid var(--orange);
-  }
+  .steps { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 30px; }
+  .steps li { border-top: 1.5px solid var(--ink); padding-top: 10px; }
+  .num { font-family: var(--font-body); font-weight: 700; color: var(--orange); letter-spacing: 0.1em; }
+  .steps h3 { font-size: 1.7rem; margin: 0.3rem 0 0.3rem; }
+  .steps p { margin: 0; color: var(--ink-soft); font-size: 0.98rem; }
 
-  .departments { padding-top: 2rem; }
-  .departments h2 { margin-top: 1.6rem; }
-
-  @media (max-width: 900px) {
-    .grid { grid-template-columns: 1fr; gap: 36px; padding-top: 1.8rem; }
-    .photo { aspect-ratio: 1 / 1; box-shadow: 6px 6px 0 var(--ink); margin-right: 6px; padding-bottom: 14%; }
-    .seal { width: 50%; }
-    .issue { letter-spacing: 0.2em; font-size: 0.75rem; gap: 10px; }
+  @media (max-width: 1000px) {
+    .hero-in { grid-template-columns: 1fr; gap: 28px; padding-top: 1.8rem; }
+    .index { flex-direction: row; flex-wrap: wrap; margin-top: 0; border-left: 0; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink); padding: 10px 0; gap: 8px 22px; }
+    .index .code { border-bottom: 0; padding-bottom: 0; }
+    .collage { min-height: 0; grid-template-columns: 6% 6% 6% minmax(0, 1fr) 6%; grid-template-rows: auto auto auto auto; }
+    .st, .poster { grid-row: 1; }
+    .poster { grid-column: 4; padding: 34px 16px; }
+    .seal { width: 64%; }
+    .c-top, .c-mid, .c-bot { grid-column: 1 / 5; }
+    .c-top { grid-row: 2; border-left: 0; }
+    .c-mid { grid-row: 3; margin: 0 18px; }
+    .c-bot { grid-row: 4; border-top: 0; }
+    .bl { grid-column: 5; }
+    .b1 { grid-row: 1; } .b2 { grid-row: 2 / 4; } .b3 { grid-row: 4; }
+    .spread { grid-template-columns: 1fr; gap: 32px; padding-top: 3.5rem; }
+    .spread-pic { box-shadow: 6px 6px 0 var(--orange); margin-right: 6px; }
+    .quote { font-size: 1.25rem; }
+  }
+  @media (max-width: 560px) {
+    .steps { grid-template-columns: 1fr; }
+    .issue { letter-spacing: 0.18em; font-size: 0.72rem; gap: 10px; }
   }
 </style>

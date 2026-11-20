@@ -1,80 +1,98 @@
 ---
-// De tre afdelinger som artikler i magasinet. Billedfeltet er klar til rigtige fotos senere.
-// LEGO har et (dæmpet) katalog-præg: knop-mønster og rundt mærke – ingen LEGO-logoer.
-import Icon from './Icon.astro';
+// Afdelingerne som fotomosaik (én stor + to mindre fliser, runde "+"-knapper),
+// med magasinets tekstbokse oven på billedet. Illustrationerne erstattes af fotos senere.
+import Illus from './Illus.astro';
 import { t, href, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
-const doors = [
-  { no: '01', slug: 'lego', icon: 'brick', kind: 'lego', badge: 'badge.lego', title: 'door.lego.title', text: 'door.lego.text', soon: false },
-  { no: '02', slug: 'retro', icon: 'lamp', kind: 'retro', badge: 'badge.retro', title: 'door.retro.title', text: 'door.retro.text', soon: false },
-  { no: '03', slug: 'services', icon: 'city', kind: 'services', badge: 'badge.services', title: 'door.services.title', text: 'door.services.text', soon: true },
+const tiles = [
+  { no: '01', slug: 'lego', illus: 'bricks', kind: 'lego', badge: 'badge.lego', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { no: '02', slug: 'retro', illus: 'lamp', kind: 'retro', badge: 'badge.retro', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { no: '03', slug: 'services', illus: 'city', kind: 'services', badge: 'badge.services', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
 ---
-<ul class="articles">
-  {doors.map((d) => (
-    <li>
-      <a class={`article ${d.kind}`} href={href(lang, d.slug)}>
-        <span class="pic">
-          <Icon name={d.icon} />
-          <span class="badge">{t(lang, d.badge)}</span>
+<ul class="mosaic">
+  {tiles.map((d) => (
+    <li class={d.kind}>
+      <a class="tile" href={href(lang, d.slug)}>
+        <span class="pic"><Illus name={d.illus} /></span>
+        <span class="badge">{t(lang, d.badge)}</span>
+        <span class="box">
+          <span class="kicker">No. {d.no}</span>
+          <span class="title">{t(lang, d.title)}</span>
+          <span class="text">{t(lang, d.text)}</span>
+          <span class="go">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
         </span>
-        <span class="kicker">No. {d.no}</span>
-        <h3>{t(lang, d.title)}</h3>
-        <p>{t(lang, d.text)}</p>
-        <span class="btn">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
+        <span class="plus" aria-hidden="true">+</span>
       </a>
     </li>
   ))}
 </ul>
 
 <style>
-  .articles { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 32px; }
-  .article { display: flex; flex-direction: column; height: 100%; text-decoration: none; color: var(--ink); }
-  .article:hover { color: var(--ink); }
+  .mosaic {
+    list-style: none; padding: 0; margin: 2rem 0 0;
+    display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-rows: 1fr 1fr; gap: 18px;
+  }
+  .lego { grid-row: 1 / 3; }
+  .tile {
+    position: relative; display: flex; height: 100%; min-height: 300px; overflow: hidden;
+    text-decoration: none; color: var(--ink); border: 1.5px solid var(--ink);
+  }
+  .pic { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: transform 0.4s ease; }
+  .tile:hover .pic { transform: scale(1.04); }
 
-  /* Billedfelt */
-  .pic {
-    position: relative; display: flex; align-items: center; justify-content: center;
-    aspect-ratio: 4 / 3; overflow: hidden; border: 1.5px solid var(--ink);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-  .article:hover .pic { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
-  .pic :global(.icon) { width: 46%; height: auto; }
+  /* Baggrunde: dæmpet katalog-solstråle til LEGO, papir/teak til Retro, havn til Services */
+  .lego .pic { background: repeating-conic-gradient(from 0deg at 50% 62%, #d99b22 0deg 8deg, var(--mustard) 8deg 16deg); padding: 60px 40px 170px; }
+  .retro .pic { background: linear-gradient(180deg, var(--paper-deep) 0 78%, #cdbb94 78%); padding: 10px 40% 10px 20px; }
+  .services .pic { background: var(--navy); padding: 10px 40% 0 0; align-items: flex-end; }
+  .lego .pic :global(.illus) { max-width: 560px; }
 
-  /* LEGO: dæmpet katalog – sennep med knop-mønster */
-  .lego .pic {
-    background-color: var(--mustard);
-    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 0 7px, rgba(0, 0, 0, 0.10) 7px 9px, transparent 9px);
-    background-size: 34px 34px;
+  /* Magasinets tekstboks oven på billedet */
+  .box {
+    position: relative; z-index: 1; align-self: flex-end; margin: 0 0 18px 18px; width: min(360px, 62%);
+    background: var(--paper); padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 4px;
+    border-top: 6px solid var(--orange); box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
   }
-  .lego .pic :global(.icon) { color: var(--ink); }
-  /* Retro: papir med orange striber som et magasinopslag */
-  .retro .pic {
-    background: linear-gradient(90deg, var(--paper-deep) 0 70%, var(--orange) 70% 80%, var(--red) 80% 90%, var(--mustard) 90%);
-  }
-  .retro .pic :global(.icon) { color: var(--ink); margin-right: 22%; }
-  /* Services: marineblå */
-  .services .pic { background: var(--navy); }
-  .services .pic :global(.icon) { color: var(--paper); }
+  .retro .box, .services .box { margin-left: auto; margin-right: 18px; width: min(300px, 46%); }
+  .services .box { border-top-color: var(--mustard); }
+  .kicker { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; color: var(--orange); }
+  .title { font-family: var(--font-display); text-transform: uppercase; font-size: 2rem; line-height: 1; }
+  .lego .title { font-size: 2.8rem; }
+  .text { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.5; }
+  .go { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.85rem; margin-top: 6px; }
+  .tile:hover .go { color: var(--orange); }
 
   /* Rundt mærke som i katalogerne */
   .badge {
-    position: absolute; top: 14px; left: 14px; width: 92px; height: 92px; border-radius: 50%;
+    position: absolute; z-index: 1; top: 18px; right: 18px; width: 96px; height: 96px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px;
-    font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; line-height: 1.15;
-    transform: rotate(-12deg); color: var(--paper); background: var(--red);
-    box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--red);
+    font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.74rem; line-height: 1.15;
+    transform: rotate(10deg); color: var(--paper); background: var(--red);
+    box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--red), 4px 6px 0 5px rgba(0, 0, 0, 0.2);
   }
-  .retro .badge { background: var(--navy); box-shadow: 0 0 0 3px var(--paper), 0 0 0 4.5px var(--navy); }
-  .services .badge { background: var(--orange); box-shadow: 0 0 0 3px var(--navy), 0 0 0 4.5px var(--orange); }
+  .retro .badge { background: var(--navy); box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--navy); }
+  .services .badge { background: var(--orange); box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--orange); }
+  .retro .badge, .services .badge { right: auto; left: 18px; width: 84px; height: 84px; }
 
-  .kicker {
-    margin-top: 1.1rem; padding-bottom: 6px; border-bottom: 1.5px solid var(--ink);
-    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.8rem; color: var(--orange);
+  /* Rund "+"-knap som på LEGO-siden */
+  .plus {
+    position: absolute; z-index: 1; left: 18px; top: 18px; width: 38px; height: 38px; border-radius: 50%;
+    background: #fff; color: var(--ink); border: 1.5px solid var(--ink);
+    display: flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 1.5rem; line-height: 1;
   }
-  h3 { margin: 0.7rem 0 0.4rem; font-size: 2.2rem; }
-  p { margin: 0 0 1.2rem; color: var(--ink-soft); }
-  .btn { margin-top: auto; align-self: flex-start; }
-  .article:hover .btn { background: var(--ink); color: var(--paper); }
+  .retro .plus, .services .plus { left: auto; right: 18px; }
+  .tile:hover .plus { background: var(--orange); color: #fff; }
+
+  @media (max-width: 860px) {
+    .mosaic { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .lego { grid-row: auto; }
+    .tile { min-height: 0; flex-direction: column; }
+    .pic { position: relative; inset: auto; }
+    .lego .pic { padding: 70px 24px 24px; }
+    .retro .pic { padding: 50px 20% 0; }
+    .services .pic { padding: 50px 14% 0; }
+    .box, .retro .box, .services .box { margin: -40px 14px 14px; width: auto; align-self: stretch; }
+    .lego .title { font-size: 2.2rem; }
+  }
 </style>
