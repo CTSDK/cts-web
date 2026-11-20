@@ -24,19 +24,21 @@ const year = new Date().getFullYear();
       <span class="big">CTS<span class="dot">.</span></span>
     </h1>
 
-    <div class="strap">
-      <span>{t(lang, 'strap.left')}</span>
-      <span class="slash" aria-hidden="true"></span>
-      <span>N°01</span>
-    </div>
-
-    <p class="lead">{t(lang, 'home.intro')}</p>
-
     <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
     <p class="label kicker">01 – 03</p>
     <h2>{t(lang, 'home.choose')}</h2>
     <Doors lang={lang} />
+
+    <div class="about">
+      <div class="strap">
+        <span>{t(lang, 'strap.left')}</span>
+        <span class="slash" aria-hidden="true"></span>
+        <span>N°01</span>
+      </div>
+
+      <p class="lead">{t(lang, 'home.intro')}</p>
+    </div>
   </section>
 </Base>
 
@@ -53,7 +55,7 @@ const year = new Date().getFullYear();
   .seal { width: 150px; height: 150px; margin: 2.4rem auto 0.6rem; mix-blend-mode: multiply; }
 
   /* Overskrift som på magasin-coveret: lille kursiv + stor serif med punktum */
-  h1 { text-transform: none; line-height: 1; margin: 0 0 1.4rem; }
+  h1 { text-transform: none; line-height: 1; margin: 0; }
   .pre { display: block; font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 2.6rem); color: var(--ink-soft); }
   .big { display: block; font-family: var(--font-serif); font-weight: 700; font-size: clamp(5rem, 15vw, 10rem); letter-spacing: -0.02em; color: var(--navy); line-height: 0.95; }
   .dot { color: var(--orange); }
@@ -68,9 +70,10 @@ const year = new Date().getFullYear();
   .strap span:first-child { flex: 1; }
   .strap .slash { padding: 0; width: 28px; background: linear-gradient(to top right, transparent calc(50% - 0.6px), var(--ink) calc(50% - 0.6px), var(--ink) calc(50% + 0.6px), transparent calc(50% + 0.6px)); }
 
+  .about { margin-top: 4rem; }
   .lead { font-size: 1.05rem; line-height: 1.8; max-width: 36rem; }
 
-  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.8rem 0 2.4rem; }
+  .bars { display: flex; justify-content: center; gap: 6px; margin: 2.2rem 0 2.2rem; }
   .bars span { width: 34px; height: 6px; }
   .bars span:nth-child(1) { background: var(--blue); }
   .bars span:nth-child(2) { background: var(--mustard); }
