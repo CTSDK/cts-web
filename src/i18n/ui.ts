@@ -16,6 +16,9 @@ export const ui = {
     'issue.left': 'Copenhagen · Denmark',
     'issue.right': 'Issue No. 01',
     'strap.left': 'Found · Restored · Passed on',
+    'intro.a': 'A small Danish business with a fondness for things that were made to last.',
+    'intro.b': 'We find them, sort them, restore them and give them a new home.',
+    'side.a': 'About CTS',
     'home.intro':
       'A small Danish business with a fondness for things that were made to last. We find them, sort them, restore them and give them a new home.',
     'home.choose': 'Choose a department',
@@ -60,6 +63,9 @@ export const ui = {
     'issue.left': 'Kopenhagen · Dänemark',
     'issue.right': 'Ausgabe Nr. 01',
     'strap.left': 'Gefunden · Aufgearbeitet · Weitergegeben',
+    'intro.a': 'Ein kleines dänisches Unternehmen mit einer Vorliebe für Dinge, die für die Ewigkeit gemacht wurden.',
+    'intro.b': 'Wir finden sie, sortieren sie, arbeiten sie auf und geben ihnen ein neues Zuhause.',
+    'side.a': 'Über CTS',
     'home.intro':
       'Ein kleines dänisches Unternehmen mit einer Vorliebe für Dinge, die für die Ewigkeit gemacht wurden. Wir finden sie, sortieren sie, arbeiten sie auf und geben ihnen ein neues Zuhause.',
     'home.choose': 'Wählen Sie eine Abteilung',
