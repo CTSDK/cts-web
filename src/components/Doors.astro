@@ -3,38 +3,49 @@ import Icon from './Icon.astro';
 import { t, href, type Lang } from '../i18n/ui';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
+// De tre afdelinger som "spor" på en plade: No. 01–03, hver med sin farve.
 const doors = [
-  { slug: 'lego', icon: 'brick', title: 'door.lego.title', text: 'door.lego.text', soon: false },
-  { slug: 'retro', icon: 'lamp', title: 'door.retro.title', text: 'door.retro.text', soon: false },
-  { slug: 'services', icon: 'city', title: 'door.services.title', text: 'door.services.text', soon: true },
+  { no: '01', slug: 'lego', icon: 'brick', color: 'var(--mustard)', title: 'door.lego.title', text: 'door.lego.text', soon: false },
+  { no: '02', slug: 'retro', icon: 'lamp', color: 'var(--orange)', title: 'door.retro.title', text: 'door.retro.text', soon: false },
+  { no: '03', slug: 'services', icon: 'city', color: 'var(--blue)', tone: '#8cb4dd', title: 'door.services.title', text: 'door.services.text', soon: true },
 ] as const;
 ---
-<ul class="doors">
+<ul class="tracks">
   {doors.map((d) => (
     <li>
-      <a class="door" href={href(lang, d.slug)}>
-        <Icon name={d.icon} />
+      <a class="track" href={href(lang, d.slug)} style={`--c: ${d.color}; --t: ${'tone' in d ? d.tone : d.color}`}>
+        <span class="head">
+          <span class="no">No. {d.no}</span>
+          <span class="code">CTS-0{d.no}</span>
+        </span>
+        <span class="art"><Icon name={d.icon} /></span>
         <h3>{t(lang, d.title)}</h3>
         <p>{t(lang, d.text)}</p>
-        <span class="enter">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
+        <span class="btn">{d.soon ? t(lang, 'soon') : t(lang, 'door.enter')} →</span>
       </a>
     </li>
   ))}
 </ul>
 
 <style>
-  .doors { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
-  /* "Dør" med buet top og dobbelt ramme – som en gammel butiksdør */
-  .door {
-    display: flex; flex-direction: column; align-items: center; text-align: center; height: 100%;
-    padding: 56px 22px 26px; text-decoration: none; color: var(--ink);
-    background: var(--paper-deep);
-    border: 3px double var(--ink);
-    border-radius: 140px 140px 4px 4px;
+  .tracks { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+  .track {
+    display: flex; flex-direction: column; height: 100%; text-decoration: none; color: var(--ink);
+    background: var(--paper-deep); border: 1.5px solid var(--ink);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .door:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--ink); color: var(--ink); }
-  .door p { margin: 0 0 1.2rem; color: var(--ink-soft); }
-  .door h3 { margin-top: 0.6rem; }
-  .enter { margin-top: auto; font-family: var(--font-display); color: var(--accent); letter-spacing: 0.05em; }
+  .track:hover { transform: translateY(-3px); box-shadow: 6px 6px 0 var(--navy); color: var(--ink); }
+  .head {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--navy); color: var(--paper); padding: 10px 16px;
+    font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.25em; font-size: 0.85rem;
+    border-bottom: 6px solid var(--c);
+  }
+  .no { font-weight: 500; color: var(--t); }
+  .art { display: flex; justify-content: center; padding: 22px 0 6px; }
+  .art :global(.icon) { color: var(--ink); }
+  h3 { padding: 0 20px; margin: 0.4rem 0 0.4rem; font-size: 2.1rem; }
+  p { padding: 0 20px; margin: 0 0 1.4rem; color: var(--ink-soft); }
+  .btn { margin: auto 20px 20px; align-self: flex-start; }
+  .track:hover .btn { background: var(--ink); color: var(--paper); }
 </style>
