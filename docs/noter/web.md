@@ -1,6 +1,7 @@
 # CTS Web – status og næste skridt
 
-Sidst opdateret: 20-11-2026. Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `32d5d8e`, grøn).
+Sidst opdateret: 20-11-2026 (sen aften). Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `4450ade`, grøn).
+Den fulde note (regler, teknik, fast måde for nyt sæt) ligger i `CTSDK/cts-app` → `docs/noter/web.md`.
 
 ## Sådan er siden NU (bygget, testet og lagt ud)
 
@@ -22,6 +23,7 @@ Farver/skrift: `src/styles/global.css`. Tekster EN+DE: `src/i18n/ui.ts`.
 - Grå boks "Themes" med 11 runde tema-ikoner (som LEGO.com, men egne cirkler).
 - Star Wars: Thomas' foto af Obi-Wan i cockpittet, "1 SET", fører til 75135.
 - Castle: foto af borg 375, "Coming soon" (intet Castle-sæt endnu).
+- Games (DE "Spiele", 12. cirkel): Thomas' foto af Shave a Sheep-æsken (uden LEGO-logo), "1 SET", fører til 3845.
 - Øvrige temaer: farvecirkel med forbogstaver, nedtonet, "Coming soon".
 
 **Salgsside 75135 Obi-Wan's Jedi Interceptor** (`src/components/views/LegoSet.astro`, `/lego/75135/`):
@@ -31,11 +33,16 @@ Farver/skrift: `src/styles/global.css`. Tekster EN+DE: `src/i18n/ui.ts`.
 - Købsknap er grå: "Buying here – coming soon".
 - Kilder: cts-app → Lager/Indkøb (stand, note om æske), "261118 Sortering" (alle dele fundet).
 
+**Salgsside 3845 Wild Wool / Shave a Sheep** (`/lego/3845/`, lagt ud 20-11): pris **€15** (Thomas), stand 9/10, 118 dele, 2010, ingen minifigurer ("–").
+Galleri 4 fotos (Thomas' forside-foto + Drive 261118-3845.01–.03). Tekst EN+DE (brætspil 2–4 spillere, 5+, 10–15 min. fra æsken). Købsknap grå.
+Ikke set live (Claudes miljø kan ikke åbne github.io) – Thomas tjekker.
+
 **Andet:** Retro-, Services- og Privatlivssiderne har endnu den simple "coming soon"-opbygning i ny stil.
 Kontakt: "CTS mail – coming soon".
 
 ## NÆSTE (forslag – kræver Thomas' ja)
-1. **Købsknap for 75135:** link til eBay-opslaget (Thomas sender link) eller vent på webshop.
+1. **Thomas tjekker 3845 live.** Flere fotos af 3845 → galleriet.
+1. **Købsknapper 75135 + 3845:** links til eBay-opslag (Thomas sender) eller vent på webshop.
 2. **Flere sæt:** tilføj i `src/data/lego.ts` (`sets` + `photo`/`set` på temaet). Når et tema får flere sæt → egen temaside med oversigt.
 3. **Egne fotos til tema-cirklerne** (minifigur pr. tema, ensfarvet baggrund) → Drive "CTS - Webpage → Indbakke til Claude".
 4. **Retro Design-siden** i samme stil som LEGO (Thomas' fotos af lamper/møbler).
@@ -45,6 +52,3 @@ Kontakt: "CTS mail – coming soon".
 ## Mangler at blive testet hos Thomas
 - iPhone-hjemmeskærmsikonet viste gammel udgave → løsning: slet ikonet og tilføj igen fra Safari.
 
-## Ikke nået i dag
-- Noterne i `CTSDK/cts-app` (hovednote + `docs/noter/web.md`) er **ikke** opdateret – denne samtale havde ikke adgang til det repo.
-  Næste samtale med adgang til cts-app: kopiér/henvis til denne fil.
