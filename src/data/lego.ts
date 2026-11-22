@@ -2,7 +2,7 @@
 // Nyt sæt: tilføj et objekt i `sets` og sæt dets tema til `active: true` i `themes`.
 // Kilde for 3845: cts-app → Indkøb (stand 9, æske, vejledning, komplet, "Alt er fint"), DB (Games, 2010),
 // ren sorteringsliste (118 dele, ingen minifigurer), æskens fotos (2–4 spillere, 5+, 10–15 min.). Pris €15 sat af Thomas 20-11-2026.
-// Kilde for 70783: cts-app → Indkøb (stand 7 pga. kassen, poser nye og ubrudte, vejledning 10/10, kasse repareret), "261118 Sortering" (63 dele). Pris mangler – Thomas.
+// Kilde for 70783: cts-app → Indkøb (stand 7 pga. kassen, poser nye og ubrudte, vejledning 10/10, kasse repareret), "261118 Sortering" (63 dele). Pris €30 sat af Thomas 22-11-2026.
 // Kilde for 75135: cts-app → Lager (stand 9, æske) og "261118 Sortering" (alle dele fundet).
 import type { Lang } from '../i18n/ui';
 
@@ -124,6 +124,7 @@ export const sets: LegoSet[] = [
     pieces: 63,
     minifigs: [],
     condition: 7, // kassen trækker ned – dele og vejledning 10/10
+    priceEur: 30, // sat af Thomas 22-11-2026
     photos: [
       { file: 'img/lego/70783/01.jpg', thumb: 'img/lego/70783/t-01.jpg', w: 1023, h: 1600, alt: { en: 'The box, front – with the torn corner', de: 'Der Karton, Vorderseite – mit der eingerissenen Ecke' } },
       { file: 'img/lego/70783/02.jpg', thumb: 'img/lego/70783/t-02.jpg', w: 1310, h: 1600, alt: { en: 'Everything included: building instructions and the unopened bags', de: 'Alles dabei: Bauanleitung und die ungeöffneten Beutel' } },
