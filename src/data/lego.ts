@@ -2,6 +2,7 @@
 // Nyt sæt: tilføj et objekt i `sets` og sæt dets tema til `active: true` i `themes`.
 // Kilde for 3845: cts-app → Indkøb (stand 9, æske, vejledning, komplet, "Alt er fint"), DB (Games, 2010),
 // ren sorteringsliste (118 dele, ingen minifigurer), æskens fotos (2–4 spillere, 5+, 10–15 min.). Pris €15 sat af Thomas 20-11-2026.
+// Kilde for 70783: cts-app → Indkøb (stand 7 pga. kassen, poser nye og ubrudte, vejledning 10/10, kasse repareret), "261118 Sortering" (63 dele). Pris mangler – Thomas.
 // Kilde for 75135: cts-app → Lager (stand 9, æske) og "261118 Sortering" (alle dele fundet).
 import type { Lang } from '../i18n/ui';
 
@@ -29,6 +30,7 @@ export const themes: Theme[] = [
   { slug: 'train', name: { en: 'Train', de: 'Eisenbahn' }, mono: 'TR', color: 'var(--navy)' },
   { slug: 'aquazone', name: { en: 'Aquazone', de: 'Aquazone' }, mono: 'AQ', color: '#2f7f86' },
   { slug: 'games', name: { en: 'Games', de: 'Spiele' }, mono: 'GA', color: 'var(--mustard)', set: '3845', photo: 'img/lego/themes/games.jpg' },
+  { slug: 'bionicle', name: { en: 'Bionicle', de: 'Bionicle' }, mono: 'BI', color: 'var(--orange)', set: '70783', photo: 'img/lego/themes/bionicle.jpg' },
 ];
 
 export interface LegoSet {
@@ -111,6 +113,33 @@ export const sets: LegoSet[] = [
     included: {
       en: ['All 118 parts – checked against the parts list', 'LEGO die', 'Building instructions', 'Game rules', 'Original box'],
       de: ['Alle 118 Teile – anhand der Teileliste geprüft', 'LEGO Würfel', 'Bauanleitung', 'Spielregeln', 'Originalkarton'],
+    },
+  },
+  {
+    no: '70783',
+    sku: '261118-70783',
+    name: 'Protector of Fire',
+    theme: 'bionicle',
+    year: 2015,
+    pieces: 63,
+    minifigs: [],
+    condition: 7, // kassen trækker ned – dele og vejledning 10/10
+    photos: [
+      { file: 'img/lego/70783/01.jpg', thumb: 'img/lego/70783/t-01.jpg', w: 1023, h: 1600, alt: { en: 'The box, front – with the torn corner', de: 'Der Karton, Vorderseite – mit der eingerissenen Ecke' } },
+      { file: 'img/lego/70783/02.jpg', thumb: 'img/lego/70783/t-02.jpg', w: 1310, h: 1600, alt: { en: 'Everything included: building instructions and the unopened bags', de: 'Alles dabei: Bauanleitung und die ungeöffneten Beutel' } },
+      { file: 'img/lego/70783/03.jpg', thumb: 'img/lego/70783/t-03.jpg', w: 1600, h: 1188, alt: { en: 'The building instructions', de: 'Die Bauanleitung' } },
+    ],
+    intro: {
+      en: 'The fiery Protector of Fire from 2015 – with new, unopened bags, building instructions and the original box.',
+      de: 'Der feurige Protector of Fire von 2015 – mit neuen, ungeöffneten Beuteln, Bauanleitung und Originalkarton.',
+    },
+    text: {
+      en: 'The Protector of Fire guards the Region of Fire on the island of Okoto. The figure from 2015 has a rapid shooter that fires six fire balls, flame weapons – and comes with a Skull Spider to battle.\n\nThe parts are in their original bags, new and unopened, and the building instructions are as new. The box has a tear and a hole; we have repaired it as well as we could – which is why we rate the set 7/10.',
+      de: 'Der Protector of Fire bewacht die Region des Feuers auf der Insel Okoto. Die Figur von 2015 hat einen Schnellshooter, der sechs Feuerkugeln abfeuert, Flammenwaffen – und eine Skull Spider zum Kämpfen.\n\nDie Teile sind in ihren Originalbeuteln, neu und ungeöffnet, und die Bauanleitung ist wie neu. Der Karton hat einen Riss und ein Loch; wir haben ihn so gut wie möglich repariert – deshalb bewerten wir das Set mit 7/10.',
+    },
+    included: {
+      en: ['All 63 parts in new, unopened bags', 'Skull Spider', 'Building instructions (as new)', 'Original box (torn and repaired)'],
+      de: ['Alle 63 Teile in neuen, ungeöffneten Beuteln', 'Skull Spider', 'Bauanleitung (wie neu)', 'Originalkarton (eingerissen und repariert)'],
     },
   },
 ];
