@@ -1,6 +1,6 @@
 # CTS Web – status og næste skridt
 
-Sidst opdateret: 20-11-2026 (sen aften). Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `4450ade`, grøn).
+Sidst opdateret: 22-11-2026. Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `9d4a398`, grøn).
 Den fulde note (regler, teknik, fast måde for nyt sæt) ligger i `CTSDK/cts-app` → `docs/noter/web.md`.
 
 ## Sådan er siden NU (bygget, testet og lagt ud)
@@ -24,6 +24,7 @@ Farver/skrift: `src/styles/global.css`. Tekster EN+DE: `src/i18n/ui.ts`.
 - Star Wars: Thomas' foto af Obi-Wan i cockpittet, "1 SET", fører til 75135.
 - Castle: foto af borg 375, "Coming soon" (intet Castle-sæt endnu).
 - Games (DE "Spiele", 12. cirkel): Thomas' foto af Shave a Sheep-æsken (uden LEGO-logo), "1 SET", fører til 3845.
+- Bionicle (13. cirkel): Thomas' foto af vejledningens forside (IMG_9704), beskåret om masken – uden Bionicle-logo. "1 SET", fører til 70783.
 - Øvrige temaer: farvecirkel med forbogstaver, nedtonet, "Coming soon".
 
 **Salgsside 75135 Obi-Wan's Jedi Interceptor** (`src/components/views/LegoSet.astro`, `/lego/75135/`):
@@ -37,17 +38,24 @@ Farver/skrift: `src/styles/global.css`. Tekster EN+DE: `src/i18n/ui.ts`.
 Galleri 4 fotos (Thomas' forside-foto + Drive 261118-3845.01–.03). Tekst EN+DE (brætspil 2–4 spillere, 5+, 10–15 min. fra æsken). Købsknap grå.
 Ikke set live (Claudes miljø kan ikke åbne github.io) – Thomas tjekker.
 
+**Salgsside 70783 Protector of Fire** (`/lego/70783/`, lagt ud 22-11): pris **€30** (Thomas), stand 7/10 (kun pga. kassen: revnet, hul, repareret), 63 dele, 2015, ingen minifigurer.
+Poser nye og uåbnede, vejledning som ny, Skull Spider med. Galleri 3 fotos fra Drive (261118-70783.01–.03, kassens forside først). Tekst EN+DE. Købsknap grå.
+"Checked piece by piece" står fast på alle salgssider – Thomas har sagt, det er fint (også for 70783).
+
 **Andet:** Retro-, Services- og Privatlivssiderne har endnu den simple "coming soon"-opbygning i ny stil.
 Kontakt: "CTS mail – coming soon".
 
 ## NÆSTE (forslag – kræver Thomas' ja)
-1. **Thomas tjekker 3845 live.** Flere fotos af 3845 → galleriet.
-1. **Købsknapper 75135 + 3845:** links til eBay-opslag (Thomas sender) eller vent på webshop.
+1. **Thomas tjekker 3845 og 70783 live.** Flere fotos af 3845 → galleriet.
+1. **Købsknapper 75135 + 3845 + 70783:** links til eBay-opslag (Thomas sender) eller vent på webshop.
 2. **Flere sæt:** tilføj i `src/data/lego.ts` (`sets` + `photo`/`set` på temaet). Når et tema får flere sæt → egen temaside med oversigt.
 3. **Egne fotos til tema-cirklerne** (minifigur pr. tema, ensfarvet baggrund) → Drive "CTS - Webpage → Indbakke til Claude".
 4. **Retro Design-siden** i samme stil som LEGO (Thomas' fotos af lamper/møbler).
 5. **CTS-mail** i kontakt + bund.
 6. Senere: Copenhagen Services, eget domæne, webshop (ordrebekræftelse efter sættet er fjernet fra eBay).
+
+## Noter til cts-app
+Claude kunne ikke åbne `CTSDK/cts-app` i samtalen 22-11 (adgang afvist) – dens `docs/noter/web.md` er IKKE opdateret med 70783. Gøres næste gang.
 
 ## Mangler at blive testet hos Thomas
 - iPhone-hjemmeskærmsikonet viste gammel udgave → løsning: slet ikonet og tilføj igen fra Safari.
