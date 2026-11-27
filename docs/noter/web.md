@@ -1,6 +1,9 @@
 # CTS Web – status og næste skridt
 
-Sidst opdateret: 22-11-2026. Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `9d4a398`, grøn).
+Sidst opdateret: 27-11-2026. Live: https://ctsdk.github.io/cts-web/ (seneste udgivelse `a068662`, grøn). Den fulde, opdaterede note: `CTSDK/cts-app` → `docs/noter/web.md`.
+
+**27-11:** 54 nye, forseglede sæt (lagernumre N-sætnr, data `src/data/nyt.ts`, sider `src/pages/lego/[no].astro`) uden pris/fotos;
+stand-mærke New, sealed / Used på alle sider; 25 tema-cirkler; temaside `/lego/theme/<slug>/` ved flere sæt. Thomas har set det live.
 Den fulde note (regler, teknik, fast måde for nyt sæt) ligger i `CTSDK/cts-app` → `docs/noter/web.md`.
 
 ## Sådan er siden NU (bygget, testet og lagt ud)
@@ -46,16 +49,13 @@ Poser nye og uåbnede, vejledning som ny, Skull Spider med. Galleri 3 fotos fra 
 Kontakt: "CTS mail – coming soon".
 
 ## NÆSTE (forslag – kræver Thomas' ja)
-1. **Thomas tjekker 3845 og 70783 live.** Flere fotos af 3845 → galleriet.
-1. **Købsknapper 75135 + 3845 + 70783:** links til eBay-opslag (Thomas sender) eller vent på webshop.
-2. **Flere sæt:** tilføj i `src/data/lego.ts` (`sets` + `photo`/`set` på temaet). Når et tema får flere sæt → egen temaside med oversigt.
-3. **Egne fotos til tema-cirklerne** (minifigur pr. tema, ensfarvet baggrund) → Drive "CTS - Webpage → Indbakke til Claude".
-4. **Retro Design-siden** i samme stil som LEGO (Thomas' fotos af lamper/møbler).
-5. **CTS-mail** i kontakt + bund.
-6. Senere: Copenhagen Services, eget domæne, webshop (ordrebekræftelse efter sættet er fjernet fra eBay).
+1. Fotos af kasserne til de nye sæt (Thomas tager dem i appen) → galleri. Priser først når sættene er udgået (mål ≥ vejl. +30 %).
+2. Købsknapper (eBay-links eller webshop). Evt. ny tekst øverst på LEGO-siden ("Used, complete sets…" – nu også nye sæt).
+3. Antal på lager: regenerér `src/data/nyt.ts`, når der sælges (senere automatisk fra arket).
+4. Retro Design-siden, CTS-mail, egne tema-fotos, Copenhagen Services, eget domæne, webshop.
 
 ## Noter til cts-app
-Claude kunne ikke åbne `CTSDK/cts-app` i samtalen 22-11 (adgang afvist) – dens `docs/noter/web.md` er IKKE opdateret med 70783. Gøres næste gang.
+cts-app's `docs/noter/web.md` er opdateret 27-11 (inkl. 70783 og de nye sæt).
 
 ## Mangler at blive testet hos Thomas
 - iPhone-hjemmeskærmsikonet viste gammel udgave → løsning: slet ikonet og tilføj igen fra Safari.
