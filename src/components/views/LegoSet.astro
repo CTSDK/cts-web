@@ -2,7 +2,7 @@
 // Salgsside for ét LEGO-sæt – opbygget som en produktside på LEGO.com, i CTS-stil.
 import Base from '../../layouts/Base.astro';
 import { t, href, asset, type Lang } from '../../i18n/ui';
-import { getSet, themeOf, formatPrice } from '../../data/lego';
+import { getSet, themeOf, formatPrice, setsIn } from '../../data/lego';
 interface Props { lang: Lang; no: string; }
 const { lang, no } = Astro.props;
 const s = getSet(no);
@@ -14,7 +14,7 @@ const paragraphs = s.text[lang].split('\n\n');
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href={href(lang, 'lego')}>LEGO®</a>
       <span aria-hidden="true">›</span>
-      <a href={href(lang, 'lego')}>{th.name[lang]}</a>
+      <a href={href(lang, setsIn(th.slug).length > 1 ? `lego/theme/${th.slug}` : 'lego')}>{th.name[lang]}</a>
       <span aria-hidden="true">›</span>
       <span>{s.no}</span>
     </nav>
@@ -42,14 +42,15 @@ const paragraphs = s.text[lang].split('\n\n');
 
       <div class="buy">
         <p class="kicker">{th.name[lang]}{s.subtheme && ` · ${s.subtheme[lang]}`}</p>
+        <p class:list={['cond', { sealed: s.sealed }]}>{t(lang, s.sealed ? 'cond.sealed' : 'cond.used')}</p>
         <h1>{s.name}</h1>
         <p class="setno">{t(lang, 'set.number')} {s.no}</p>
 
         <ul class="facts">
           <li><b>{s.pieces}</b><span>{t(lang, 'set.pieces')}</span></li>
           <li><b>{s.year}</b><span>{t(lang, 'set.year')}</span></li>
-          <li><b>{s.minifigs.length}</b><span>{t(lang, 'set.minifigs')}</span></li>
-          <li><b>{s.condition}/10</b><span>{t(lang, 'set.condition')}</span></li>
+          <li><b>{s.minifigCount ?? s.minifigs.length}</b><span>{t(lang, 'set.minifigs')}</span></li>
+          <li><b>{s.sealed ? t(lang, 'cond.sealed.short') : `${s.condition}/10`}</b><span>{t(lang, 'set.condition')}</span></li>
         </ul>
 
         <p class="intro">{s.intro[lang]}</p>
@@ -58,7 +59,7 @@ const paragraphs = s.text[lang].split('\n\n');
           <p class="stock"><span class="dot" aria-hidden="true"></span>{t(lang, 'set.instock')}</p>
           <p class="price"><span>{t(lang, 'set.price')}</span> {s.priceEur ? <b class="amount">{formatPrice(s.priceEur, lang)}</b> : <b>{t(lang, 'set.price.soon')}</b>}</p>
           <span class="buybtn" aria-disabled="true">{t(lang, 'set.buy.soon')}</span>
-          <p class="checked">✓ {t(lang, 'set.checked')}</p>
+          <p class="checked">✓ {t(lang, s.sealed ? 'set.sealed' : 'set.checked')}</p>
         </div>
       </div>
     </div>
@@ -79,7 +80,7 @@ const paragraphs = s.text[lang].split('\n\n');
           <dt>{t(lang, 'set.pieces')}</dt><dd>{s.pieces}</dd>
           <dt>{t(lang, 'set.year')}</dt><dd>{s.year}</dd>
           <dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.length ? s.minifigs.join(', ') : '–'}</dd>
-          <dt>{t(lang, 'set.condition')}</dt><dd>{s.condition}/10</dd>
+          <dt>{t(lang, 'set.condition')}</dt><dd>{s.sealed ? t(lang, 'cond.sealed') : `${t(lang, 'cond.used')} · ${s.condition}/10`}</dd>
           <dt>SKU</dt><dd>{s.sku}</dd>
         </dl>
       </div>
@@ -136,6 +137,8 @@ const paragraphs = s.text[lang].split('\n\n');
   /* Købsboks */
   .kicker { margin: 0; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.95rem; color: var(--orange); }
   h1 { font-size: clamp(2.4rem, 4.6vw, 3.8rem); margin: 0.4rem 0 0.3rem; }
+  .cond { display: inline-block; margin: 0.2rem 0 0.4rem; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--ink); font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; color: var(--ink); }
+  .cond.sealed { background: var(--mustard); border-color: var(--mustard); }
   .setno { margin: 0 0 1.2rem; font-size: 1.1rem; color: var(--ink-soft); }
   .facts { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
   .facts li { display: flex; flex-direction: column; align-items: center; padding: 12px 4px; }

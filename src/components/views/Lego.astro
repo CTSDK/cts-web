@@ -3,7 +3,7 @@
 // Et tema med et sæt kan klikkes; de andre er nedtonede, til der kommer sæt i dem.
 import Base from '../../layouts/Base.astro';
 import { t, href, asset, type Lang } from '../../i18n/ui';
-import { themes } from '../../data/lego';
+import { themes, setsIn } from '../../data/lego';
 interface Props { lang: Lang; }
 const { lang } = Astro.props;
 ---
@@ -20,10 +20,10 @@ const { lang } = Astro.props;
     <div class="panel">
       <h2 class="panel-title">{t(lang, 'lego.themes')}</h2>
       <ul class="themes">
-        {themes.map((th) => th.set ? (
+        {themes.map((th) => { const ss = setsIn(th.slug); return ss.length ? (
           <li>
-            <a class="theme on" href={href(lang, `lego/${th.set}`)} style={`--c: ${th.color}`}>
-              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="480" height="480" /> : <span class="mono">{th.mono}</span>}<span class="tag">{t(lang, 'lego.new')}</span></span>
+            <a class="theme on" href={href(lang, ss.length === 1 ? `lego/${ss[0].no}` : `lego/theme/${th.slug}`)} style={`--c: ${th.color}`}>
+              <span class="circle">{th.photo ? <img class="ph" src={asset(th.photo)} alt="" width="480" height="480" /> : <span class="mono">{th.mono}</span>}<span class="tag">{ss.length === 1 ? t(lang, 'lego.new') : `${ss.length} ${t(lang, 'lego.sets')}`}</span></span>
               <span class="name">{th.name[lang]}</span>
             </a>
           </li>
@@ -34,7 +34,7 @@ const { lang } = Astro.props;
               <span class="name">{th.name[lang]}</span>
             </span>
           </li>
-        ))}
+        ); })}
       </ul>
     </div>
   </section>

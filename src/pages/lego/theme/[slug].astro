@@ -1,0 +1,7 @@
+---
+import LegoTheme from '../../../components/views/LegoTheme.astro';
+import { themes, setsIn } from '../../../data/lego';
+export function getStaticPaths() { return themes.filter((th) => setsIn(th.slug).length > 1).map((th) => ({ params: { slug: th.slug } })); }
+const { slug } = Astro.params;
+---
+<LegoTheme lang="en" slug={slug!} />

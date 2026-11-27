@@ -1,0 +1,53 @@
+---
+// Temaside: alle sæt i ét tema (bruges, når et tema har mere end ét sæt).
+import Base from '../../layouts/Base.astro';
+import { t, href, type Lang } from '../../i18n/ui';
+import { themeOf, setsIn, formatPrice } from '../../data/lego';
+interface Props { lang: Lang; slug: string; }
+const { lang, slug } = Astro.props;
+const th = themeOf(slug);
+const ss = setsIn(slug);
+---
+<Base lang={lang} slug="lego" title={`LEGO® ${th.name[lang]}`} description={`${th.name[lang]} – ${ss.length} ${t(lang, 'lego.sets')}`}>
+  <section class="wrap page">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href={href(lang, 'lego')}>LEGO®</a>
+      <span aria-hidden="true">›</span>
+      <span>{th.name[lang]}</span>
+    </nav>
+    <h1>{th.name[lang]}<span class="dot">.</span></h1>
+    <h2 class="sub">{t(lang, 'theme.sets')}</h2>
+    <ul class="cards">
+      {ss.map((s) => (
+        <li>
+          <a class="card" href={href(lang, `lego/${s.no}`)}>
+            <span class="no">{s.no}</span>
+            <span class="name">{s.name}</span>
+            <span class:list={['cond', { sealed: s.sealed }]}>{t(lang, s.sealed ? 'cond.sealed' : 'cond.used')}</span>
+            <span class="price">{s.priceEur ? formatPrice(s.priceEur, lang) : `${t(lang, 'set.price')}: ${t(lang, 'set.price.soon')}`}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="back"><a href={href(lang, 'lego')}>← {t(lang, 'set.back')}</a></p>
+  </section>
+</Base>
+
+<style>
+  .page { padding-top: 1.4rem; }
+  .crumbs { display: flex; gap: 10px; flex-wrap: wrap; font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.85rem; color: var(--ink-soft); border-bottom: 1px solid var(--ink); padding-bottom: 0.6rem; }
+  .crumbs a { color: var(--ink); text-decoration: none; }
+  h1 { font-family: var(--font-serif); font-weight: 700; text-transform: none; color: var(--navy); font-size: clamp(2.8rem, 8vw, 5rem); margin: 2rem 0 0.4rem; text-align: center; }
+  .dot { color: var(--orange); }
+  .sub { font-family: var(--font-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; font-size: 1.05rem; text-align: center; margin: 0 0 1.6rem; }
+  .cards { list-style: none; margin: 0 auto; padding: 0; max-width: 980px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+  .card { display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 12px; background: #f1eee7; text-decoration: none; color: var(--ink); height: 100%; box-sizing: border-box; }
+  .card:hover .name { color: var(--orange); }
+  .no { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--navy); }
+  .name { font-family: var(--font-serif); font-style: italic; font-size: 1.3rem; }
+  .cond { align-self: flex-start; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--ink); font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; }
+  .cond.sealed { background: var(--mustard); border-color: var(--mustard); }
+  .price { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; color: var(--ink-soft); }
+  .back { margin-top: 2.6rem; }
+  .back a { font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.14em; text-decoration: none; }
+</style>

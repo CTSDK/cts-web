@@ -3,6 +3,8 @@
 // Kilde for 3845: cts-app → Indkøb (stand 9, æske, vejledning, komplet, "Alt er fint"), DB (Games, 2010),
 // ren sorteringsliste (118 dele, ingen minifigurer), æskens fotos (2–4 spillere, 5+, 10–15 min.). Pris €15 sat af Thomas 20-11-2026.
 // Kilde for 70783: cts-app → Indkøb (stand 7 pga. kassen, poser nye og ubrudte, vejledning 10/10, kasse repareret), "261118 Sortering" (63 dele). Pris €30 sat af Thomas 22-11-2026.
+// Kilde for 21348, 40914, 40918 (nye, forseglede – købt på LEGO.com 21-11-2026, faktura 1246808182): navn, år, dele og minifigurer fra
+// Rebrickable; tema/undertema fra Brickset. Ingen pris og ingen fotos endnu (Thomas tager fotos af kassen).
 // Kilde for 75135: cts-app → Lager (stand 9, æske) og "261118 Sortering" (alle dele fundet).
 import type { Lang } from '../i18n/ui';
 
@@ -13,7 +15,7 @@ export interface Theme {
   name: T;
   mono: string;      // kort mærke i cirklen (egne cirkler – ingen LEGO-billeder)
   color: string;
-  set?: string;      // sættet temaet åbner (indtil der er flere sæt i temaet)
+  set?: string;      // (ikke brugt mere – temaet finder selv sine sæt i `sets`)
   photo?: string;    // foto i cirklen (ellers farve + mærke)
 }
 
@@ -31,6 +33,8 @@ export const themes: Theme[] = [
   { slug: 'aquazone', name: { en: 'Aquazone', de: 'Aquazone' }, mono: 'AQ', color: '#2f7f86' },
   { slug: 'games', name: { en: 'Games', de: 'Spiele' }, mono: 'GA', color: 'var(--mustard)', set: '3845', photo: 'img/lego/themes/games.jpg' },
   { slug: 'bionicle', name: { en: 'Bionicle', de: 'Bionicle' }, mono: 'BI', color: 'var(--orange)', set: '70783', photo: 'img/lego/themes/bionicle.jpg' },
+  { slug: 'ideas', name: { en: 'Ideas', de: 'Ideas' }, mono: 'ID', color: 'var(--blue)' },
+  { slug: 'promotional', name: { en: 'Promotional', de: 'Promotional' }, mono: 'PR', color: 'var(--red)' },
 ];
 
 export interface LegoSet {
@@ -42,7 +46,9 @@ export interface LegoSet {
   year: number;
   pieces: number;
   minifigs: string[];
-  condition: number; // 1–10
+  minifigCount?: number; // når samme figur er med flere gange
+  condition: number; // 1–10 (brugt). Nye sæt: sealed: true
+  sealed?: boolean;  // nyt, forseglet ("New, sealed" / "Neu & OVP") – ellers "Used" / "Gebraucht"
   priceEur?: number;
   photos?: { file: string; thumb: string; w: number; h: number; alt: T }[];
   intro: T;
@@ -145,6 +151,38 @@ export const sets: LegoSet[] = [
   },
 ];
 
+const nytTekst = (gave: boolean): { intro: T; text: T; included: Record<Lang, string[]> } => ({
+  intro: gave
+    ? { en: 'New and factory sealed – never opened.', de: 'Neu und original versiegelt – nie geöffnet.' }
+    : { en: 'New and factory sealed in the original box – never opened.', de: 'Neu und original versiegelt im Originalkarton – nie geöffnet.' },
+  text: gave
+    ? { en: 'This set is new and sealed. It was a gift with purchase from LEGO.com in November 2026.', de: 'Dieses Set ist neu und versiegelt. Es war eine Gratisbeigabe beim Kauf auf LEGO.com im November 2026.' }
+    : { en: 'This set is new and sealed in its original box. It was bought new from LEGO.com in November 2026.', de: 'Dieses Set ist neu und im Originalkarton versiegelt. Es wurde im November 2026 neu auf LEGO.com gekauft.' },
+  included: gave
+    ? { en: ['New, sealed set'], de: ['Neues, versiegeltes Set'] }
+    : { en: ['New, sealed set in the original box'], de: ['Neues, versiegeltes Set im Originalkarton'] },
+});
+
+sets.push(
+  {
+    no: '21348', sku: '261121-21348', name: "Dungeons & Dragons: Red Dragon's Tale", theme: 'ideas',
+    subtheme: { en: 'Licensed', de: 'Licensed' }, year: 2024, pieces: 3747,
+    minifigs: ['Alax Jadescales', 'Dwarf Cleric', 'Elf Wizard', 'Gnome Fighter', 'Merry Rumwell', 'Myconid (2)', 'Orc Rogue', 'Skeleton (3)'],
+    minifigCount: 11, condition: 10, sealed: true, ...nytTekst(false),
+  },
+  {
+    no: '40914', sku: '261121-40914', name: 'Retro Jukebox', theme: 'promotional',
+    subtheme: { en: 'Gift with Purchase', de: 'Gift with Purchase' }, year: 2026, pieces: 287,
+    minifigs: ['Woman, bright light blue suit'], condition: 10, sealed: true, ...nytTekst(true),
+  },
+  {
+    no: '40918', sku: '261121-40918', name: 'Winter Snow Globe', theme: 'promotional',
+    subtheme: { en: 'Gift with Purchase', de: 'Gift with Purchase' }, year: 2026, pieces: 231,
+    minifigs: [], condition: 10, sealed: true, ...nytTekst(true),
+  },
+);
+
+export const setsIn = (slug: string) => sets.filter((s) => s.theme === slug);
 export const getSet = (no: string) => sets.find((s) => s.no === no)!;
 export const themeOf = (slug: string) => themes.find((t) => t.slug === slug)!;
 
