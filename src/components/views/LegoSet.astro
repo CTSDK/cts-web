@@ -47,16 +47,16 @@ const paragraphs = s.text[lang].split('\n\n');
         <p class="setno">{t(lang, 'set.number')} {s.no}</p>
 
         <ul class="facts">
-          <li><b>{s.pieces}</b><span>{t(lang, 'set.pieces')}</span></li>
+          {s.pieces && <li><b>{s.pieces}</b><span>{t(lang, 'set.pieces')}</span></li>}
           <li><b>{s.year}</b><span>{t(lang, 'set.year')}</span></li>
-          <li><b>{s.minifigCount ?? s.minifigs.length}</b><span>{t(lang, 'set.minifigs')}</span></li>
+          {!s.hideMinifigs && <li><b>{s.minifigCount ?? s.minifigs.length}</b><span>{t(lang, 'set.minifigs')}</span></li>}
           <li><b>{s.sealed ? t(lang, 'cond.sealed.short') : `${s.condition}/10`}</b><span>{t(lang, 'set.condition')}</span></li>
         </ul>
 
         <p class="intro">{s.intro[lang]}</p>
 
         <div class="pricebox">
-          <p class="stock"><span class="dot" aria-hidden="true"></span>{t(lang, 'set.instock')}</p>
+          <p class="stock"><span class="dot" aria-hidden="true"></span>{s.stock && s.stock > 1 ? t(lang, 'set.instock.n').replace('{n}', String(s.stock)) : t(lang, 'set.instock')}</p>
           <p class="price"><span>{t(lang, 'set.price')}</span> {s.priceEur ? <b class="amount">{formatPrice(s.priceEur, lang)}</b> : <b>{t(lang, 'set.price.soon')}</b>}</p>
           <span class="buybtn" aria-disabled="true">{t(lang, 'set.buy.soon')}</span>
           <p class="checked">✓ {t(lang, s.sealed ? 'set.sealed' : 'set.checked')}</p>
@@ -77,9 +77,9 @@ const paragraphs = s.text[lang].split('\n\n');
         <h2>{t(lang, 'set.specs')}</h2>
         <dl class="specs">
           <dt>{t(lang, 'set.number')}</dt><dd>{s.no}</dd>
-          <dt>{t(lang, 'set.pieces')}</dt><dd>{s.pieces}</dd>
+          {s.pieces && <><dt>{t(lang, 'set.pieces')}</dt><dd>{s.pieces}</dd></>}
           <dt>{t(lang, 'set.year')}</dt><dd>{s.year}</dd>
-          <dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.length ? s.minifigs.join(', ') : '–'}</dd>
+          {!s.hideMinifigs && <><dt>{t(lang, 'set.minifigs')}</dt><dd>{s.minifigs.length ? s.minifigs.join(', ') : '–'}</dd></>}
           <dt>{t(lang, 'set.condition')}</dt><dd>{s.sealed ? t(lang, 'cond.sealed') : `${t(lang, 'cond.used')} · ${s.condition}/10`}</dd>
           <dt>SKU</dt><dd>{s.sku}</dd>
         </dl>
@@ -140,7 +140,7 @@ const paragraphs = s.text[lang].split('\n\n');
   .cond { display: inline-block; margin: 0.2rem 0 0.4rem; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--ink); font-family: var(--font-label); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; color: var(--ink); }
   .cond.sealed { background: var(--mustard); border-color: var(--mustard); }
   .setno { margin: 0 0 1.2rem; font-size: 1.1rem; color: var(--ink-soft); }
-  .facts { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .facts { list-style: none; padding: 0; margin: 0 0 1.4rem; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
   .facts li { display: flex; flex-direction: column; align-items: center; padding: 12px 4px; }
   .facts li + li { border-left: 1px solid rgba(23, 20, 15, 0.25); }
   .facts b { font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; line-height: 1; }

@@ -1,0 +1,8 @@
+---
+// Salgssider for de nye, forseglede sæt (data: src/data/nyt.ts). De brugte sæt har egne sider.
+import LegoSet from '../../components/views/LegoSet.astro';
+import { nyeSaet } from '../../data/nyt';
+export function getStaticPaths() { return nyeSaet.map((n) => ({ params: { no: n.no } })); }
+const { no } = Astro.params;
+---
+<LegoSet lang="en" no={no!} />

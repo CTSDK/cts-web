@@ -7,6 +7,7 @@
 // Rebrickable; tema/undertema fra Brickset. Ingen pris og ingen fotos endnu (Thomas tager fotos af kassen).
 // Kilde for 75135: cts-app → Lager (stand 9, æske) og "261118 Sortering" (alle dele fundet).
 import type { Lang } from '../i18n/ui';
+import { nyeSaet } from './nyt';
 
 type T = Record<Lang, string>;
 
@@ -35,6 +36,18 @@ export const themes: Theme[] = [
   { slug: 'bionicle', name: { en: 'Bionicle', de: 'Bionicle' }, mono: 'BI', color: 'var(--orange)', set: '70783', photo: 'img/lego/themes/bionicle.jpg' },
   { slug: 'ideas', name: { en: 'Ideas', de: 'Ideas' }, mono: 'ID', color: 'var(--blue)' },
   { slug: 'promotional', name: { en: 'Promotional', de: 'Promotional' }, mono: 'PR', color: 'var(--red)' },
+  { slug: 'icons', name: { en: 'Icons', de: 'Icons' }, mono: 'IC', color: 'var(--navy)' },
+  { slug: 'city', name: { en: 'City', de: 'City' }, mono: 'CI', color: 'var(--blue)' },
+  { slug: 'speed-champions', name: { en: 'Speed Champions', de: 'Speed Champions' }, mono: 'SC', color: 'var(--red)' },
+  { slug: 'ninjago', name: { en: 'Ninjago', de: 'Ninjago' }, mono: 'NJ', color: 'var(--orange)' },
+  { slug: 'dc', name: { en: 'DC Super Heroes', de: 'DC Super Heroes' }, mono: 'DC', color: '#111' },
+  { slug: 'disney', name: { en: 'Disney', de: 'Disney' }, mono: 'DI', color: 'var(--blue)' },
+  { slug: 'fortnite', name: { en: 'Fortnite', de: 'Fortnite' }, mono: 'FO', color: 'var(--mustard)' },
+  { slug: 'minecraft', name: { en: 'Minecraft', de: 'Minecraft' }, mono: 'MC', color: '#4b7a2e' },
+  { slug: 'sonic', name: { en: 'Sonic the Hedgehog', de: 'Sonic the Hedgehog' }, mono: 'SO', color: 'var(--blue)' },
+  { slug: 'seasonal', name: { en: 'Seasonal', de: 'Saisonal' }, mono: 'SE', color: 'var(--red)' },
+  { slug: 'technic', name: { en: 'Technic', de: 'Technic' }, mono: 'TE', color: 'var(--navy)' },
+  { slug: 'brickheadz', name: { en: 'BrickHeadz', de: 'BrickHeadz' }, mono: 'BH', color: 'var(--orange)' },
 ];
 
 export interface LegoSet {
@@ -44,11 +57,13 @@ export interface LegoSet {
   theme: string;
   subtheme?: T;
   year: number;
-  pieces: number;
+  pieces?: number;
   minifigs: string[];
   minifigCount?: number; // når samme figur er med flere gange
   condition: number; // 1–10 (brugt). Nye sæt: sealed: true
-  sealed?: boolean;  // nyt, forseglet ("New, sealed" / "Neu & OVP") – ellers "Used" / "Gebraucht"
+  sealed?: boolean;
+  stock?: number;        // antal på lager (nye sæt); ellers 1
+  hideMinifigs?: boolean; // ukendt antal minifigurer – vis ikke feltet  // nyt, forseglet ("New, sealed" / "Neu & OVP") – ellers "Used" / "Gebraucht"
   priceEur?: number;
   photos?: { file: string; thumb: string; w: number; h: number; alt: T }[];
   intro: T;
@@ -151,36 +166,22 @@ export const sets: LegoSet[] = [
   },
 ];
 
-const nytTekst = (gave: boolean): { intro: T; text: T; included: Record<Lang, string[]> } => ({
-  intro: gave
-    ? { en: 'New and factory sealed – never opened.', de: 'Neu und original versiegelt – nie geöffnet.' }
-    : { en: 'New and factory sealed in the original box – never opened.', de: 'Neu und original versiegelt im Originalkarton – nie geöffnet.' },
+// Nye, forseglede sæt: genereret liste i nyt.ts (kun fakta fra Rebrickable/Brickset – ingen salgstekst opfundet)
+const nytTekst = (gave: boolean, reward: boolean): { intro: T; text: T; included: Record<Lang, string[]> } => ({
+  intro: { en: 'New and factory sealed – never opened.', de: 'Neu und original versiegelt – nie geöffnet.' },
   text: gave
-    ? { en: 'This set is new and sealed. It was a gift with purchase from LEGO.com in November 2026.', de: 'Dieses Set ist neu und versiegelt. Es war eine Gratisbeigabe beim Kauf auf LEGO.com im November 2026.' }
-    : { en: 'This set is new and sealed in its original box. It was bought new from LEGO.com in November 2026.', de: 'Dieses Set ist neu und im Originalkarton versiegelt. Es wurde im November 2026 neu auf LEGO.com gekauft.' },
-  included: gave
-    ? { en: ['New, sealed set'], de: ['Neues, versiegeltes Set'] }
-    : { en: ['New, sealed set in the original box'], de: ['Neues, versiegeltes Set im Originalkarton'] },
+    ? { en: 'This set is new and sealed. It was a LEGO gift with purchase in November 2026.', de: 'Dieses Set ist neu und versiegelt. Es war im November 2026 eine LEGO Gratisbeigabe.' }
+    : reward
+      ? { en: 'This set is new and sealed. It is a LEGO Insiders reward.', de: 'Dieses Set ist neu und versiegelt. Es ist eine LEGO Insiders-Prämie.' }
+      : { en: 'This set is new and sealed in its original box – never opened.', de: 'Dieses Set ist neu und im Originalkarton versiegelt – nie geöffnet.' },
+  included: { en: ['New, sealed set in the original box'], de: ['Neues, versiegeltes Set im Originalkarton'] },
 });
 
-sets.push(
-  {
-    no: '21348', sku: '261121-21348', name: "Dungeons & Dragons: Red Dragon's Tale", theme: 'ideas',
-    subtheme: { en: 'Licensed', de: 'Licensed' }, year: 2024, pieces: 3747,
-    minifigs: ['Alax Jadescales', 'Dwarf Cleric', 'Elf Wizard', 'Gnome Fighter', 'Merry Rumwell', 'Myconid (2)', 'Orc Rogue', 'Skeleton (3)'],
-    minifigCount: 11, condition: 10, sealed: true, ...nytTekst(false),
-  },
-  {
-    no: '40914', sku: '261121-40914', name: 'Retro Jukebox', theme: 'promotional',
-    subtheme: { en: 'Gift with Purchase', de: 'Gift with Purchase' }, year: 2026, pieces: 287,
-    minifigs: ['Woman, bright light blue suit'], condition: 10, sealed: true, ...nytTekst(true),
-  },
-  {
-    no: '40918', sku: '261121-40918', name: 'Winter Snow Globe', theme: 'promotional',
-    subtheme: { en: 'Gift with Purchase', de: 'Gift with Purchase' }, year: 2026, pieces: 231,
-    minifigs: [], condition: 10, sealed: true, ...nytTekst(true),
-  },
-);
+nyeSaet.forEach((n) => sets.push({
+  no: n.no, sku: n.sku, name: n.name, theme: n.theme, subtheme: n.sub ? { en: n.sub, de: n.sub } : undefined,
+  year: n.year, pieces: n.pieces ?? undefined, minifigs: [], hideMinifigs: true, condition: 10, sealed: true, stock: n.stock,
+  ...nytTekst(n.gwp, n.reward),
+}));
 
 export const setsIn = (slug: string) => sets.filter((s) => s.theme === slug);
 export const getSet = (no: string) => sets.find((s) => s.no === no)!;

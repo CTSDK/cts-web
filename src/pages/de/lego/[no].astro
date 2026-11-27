@@ -1,0 +1,7 @@
+---
+import LegoSet from '../../../components/views/LegoSet.astro';
+import { nyeSaet } from '../../../data/nyt';
+export function getStaticPaths() { return nyeSaet.map((n) => ({ params: { no: n.no } })); }
+const { no } = Astro.params;
+---
+<LegoSet lang="de" no={no!} />
